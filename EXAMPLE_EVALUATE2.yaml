@@ -15,7 +15,10 @@ likelihood:
     kmax_boltzmann: 5.0
     # 1 EE2, 2 Halofit
     non_linear_emul: 2
+    # IA_MODEL: 0 = NLA, 1 = TATT
     IA_model: 1
+    # IA_code: 0 = C FASTPT, 1 = Python PAST-PT
+    IA_code: 0
     IA_redshift_evolution: 3
     use_baryon_pca: False
     debug: false
@@ -411,7 +414,12 @@ theory:
       accurate_massive_neutrino_transfers: false
       k_per_logint: 10
       kmax: 5
-
+#  fastpt:
+#    path: ./external_modules/code/FAST-PT
+#    extra_args:
+#      accuracyboost: 1
+#      kmax_boltzmann: 7.5
+#      extrap_kmax: 250.0
 sampler:
   evaluate:
     N: 1
@@ -422,6 +430,8 @@ sampler:
       omegab: 0.04
       omegam: 0.3
       mnu: 0.06
+      w0pwa: -0.9
+      w: -0.9
       DES_DZ_S1: 0.0414632
       DES_DZ_S2: 0.00147332
       DES_DZ_S3: 0.0237035
@@ -445,7 +455,4 @@ sampler:
       DES_B1_3: 1.61423
       DES_B1_4: 1.92886
       DES_B1_5: 2.11633
-      w0pwa: -0.9
-      w: -0.9
-
 output: ./projects/des_y3/chains/EXAMPLE_EVALUATE2

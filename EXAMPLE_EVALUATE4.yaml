@@ -15,7 +15,10 @@ likelihood:
     kmax_boltzmann: 5.0
     # 1 EE2, 2 Halofit
     non_linear_emul: 2
+    # IA_MODEL: 0 = NLA, 1 = TATT
     IA_model: 0
+    # IA_code: 0 = C FASTPT, 1 = Python PAST-PT
+    IA_code: 0
     IA_redshift_evolution: 3
     use_baryon_pca: false
     create_baryon_pca: false
@@ -383,7 +386,12 @@ theory:
       accurate_massive_neutrino_transfers: false
       k_per_logint: 10
       kmax: 5
-
+#  fastpt:
+#    path: ./external_modules/code/FAST-PT
+#    extra_args:
+#      accuracyboost: 1
+#      kmax_boltzmann: 7.5
+#      extrap_kmax: 250.0
 sampler:
   evaluate:
     N: 1
