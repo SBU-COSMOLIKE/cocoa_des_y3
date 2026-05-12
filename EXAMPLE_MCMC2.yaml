@@ -13,9 +13,10 @@ likelihood:
     # 1 EE2, 2 Halofit
     non_linear_emul: 2
     IA_model: 1
+    # IA_code: 0 = C FASTPT, 1 = Python PAST-PT
+    IA_code: 0
     IA_redshift_evolution: 3
     use_baryon_pca: False
-
 params:
   As_1e9:
     prior:
@@ -448,7 +449,7 @@ sampler:
             As_1e9, ns, H0, omegab, omegam, w0pwa, w
           ]
         ]
-      - [2,
+      - [13,
           [
             DES_DZ_S1, DES_DZ_S2, DES_DZ_S3, DES_DZ_S4, 
             DES_A1_1, DES_A1_2, DES_A2_1, DES_A2_2, DES_BTA_1, 
@@ -456,7 +457,7 @@ sampler:
             DES_DZ_L1, DES_DZ_L2, DES_DZ_L3, DES_DZ_L4, DES_DZ_L5
           ]
         ]
-      - [20,
+      - [50,
           [
             DES_M1, DES_M2, DES_M3, DES_M4, 
           ]
