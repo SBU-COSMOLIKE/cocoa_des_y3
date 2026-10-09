@@ -34,9 +34,6 @@ PYBIND := 1
 # LINK HDF5 LIBRARY
 HDF5 := 1
 
-# LINK TO SIMDE LIBRARY
-SIMDE := 1
-
 CSOURCES :=
 OBJECTC :=
 LDFLAGS := 
@@ -51,31 +48,23 @@ CXXFLAGS = -std=c++20  -I ${ROOTDIR}/.local/include/ -I ${ROOTDIR}/external_modu
 LDFLAGS += -L$(CONDA_PREFIX)/lib -L$(ROOTDIR)/.local/lib 
 LDFLAGS += -Wl,-rpath,$(CONDA_PREFIX)/lib -Wl,-rpath,$(ROOTDIR)/.local/lib
 
+# Fast-math builds can produce incorrect covariance inverses. Keep the
+# optimized strict-IEEE default; debug mode remains available for diagnostics.
+ifdef COSMOLIKE_AGGRESSIVE_MODE
+$(error COSMOLIKE_AGGRESSIVE_MODE is retired: unset it and use the default build. Do not enable -ffast-math, -Ofast or unsafe floating-point flags)
+endif
+
 ifdef COSMOLIKE_DEBUG_MODE
 	COMMON_FLAGS += -O0 -DDEBUG -W -Wall -Wextra -Wcomment -pedantic -g -fmax-errors=1 -Wno-unknown-pragmas -fsignaling-nans
-	COMMON_FLAGS += -DCOSMO2D_NOT_USE_SIMD
 	ifeq ($(PYOS),Darwin)
 		COMMON_FLAGS += -ferror-limit=1 -fsanitize=undefined,float-divide-by-zero -fno-sanitize-recover=all
 	else
 		COMMON_FLAGS += -fmax-errors=1 -fsignaling-nans
 	endif
-else ifdef COSMOLIKE_AGGRESSIVE_MODE
-	COMMON_FLAGS += -O3 -march=native -flto=auto
-	COMMON_FLAGS += -ffast-math -fno-signed-zeros -fno-trapping-math
-	COMMON_FLAGS += -freciprocal-math -ffinite-math-only
-	COMMON_FLAGS += -funsafe-math-optimizations -fassociative-math
-	COMMON_FLAGS += -DCOSMO3D_ASSUME_PIECEWISE_UNIFORM
-	ifeq ($(PYOS),Darwin)
-		COMMON_FLAGS += -fopenmp
-		 LDFLAGS +=  -Wno-pass-failed
-	else
-		COMMON_FLAGS += -fopenmp -funroll-loops
-	endif
 else
   COMMON_FLAGS += -O3 -march=native -flto=auto
   COMMON_FLAGS += -fno-fast-math -fno-associative-math -frounding-math -ftrapping-math
   COMMON_FLAGS += -fomit-frame-pointer
-  COMMON_FLAGS += -DCOSMO3D_ASSUME_PIECEWISE_UNIFORM
   COMMON_FLAGS += -fopenmp
   ifeq ($(PYOS),Darwin)
     COMMON_FLAGS += -fno-reciprocal-math -Wno-pass-failed
@@ -92,6 +81,7 @@ ifeq ($(PYOS),Darwin)
 else
 	SOFLAG := -shared
 	LDFLAGS += -Wl,-rpath,'$$ORIGIN'
+	LDLIBS += -ldl # runtime lookup of the OpenBLAS thread setter
 	INSTALL_NAME_FLAG =
 endif
 
@@ -113,11 +103,8 @@ ifdef GSL
 	LDLIBS += -lgsl -lgslcblas
 endif
 
-ifdef SIMDE
-	COMMON_FLAGS += -I ${ROOTDIR}/external_modules/code/simde
-else
-	COMMON_FLAGS += -DCOSMO2D_NOT_USE_SIMD
-endif
+# SIMDe is required in both optimized and debug builds.
+COMMON_FLAGS += -I ${ROOTDIR}/external_modules/code/simde
 
 ifdef FMT
 	LDLIBS += -lfmt
@@ -191,6 +178,18 @@ CSOURCES += \
 		${ROOTDIR}/external_modules/code/cosmolike/radial_weights.c \
 		${ROOTDIR}/external_modules/code/cosmolike/redshift_spline.c \
 		${ROOTDIR}/external_modules/code/cosmolike/structs.c \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/nonlimber_cov.c \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/ia_cov.c \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/fftlog_cov.c \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/spectra_cov.c \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/gaussian_cov.c \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/assembly_cov.c \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/halo_cov.c \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/perturbation_cov.c \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/non_gaussian_cov.c \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/ssc_cov.c \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/operators_cov.c \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/mask_cov.c \
 		${ROOTDIR}/external_modules/code/cosmolike/pt_cfastpt.c \
 
 OBJECTC += \
@@ -208,17 +207,56 @@ OBJECTC += \
 		./radial_weights.o \
 		./redshift_spline.o \
 		./structs.o \
+		./nonlimber_cov.o \
+		./ia_cov.o \
+		./fftlog_cov.o \
+		./spectra_cov.o \
+		./gaussian_cov.o \
+		./assembly_cov.o \
+		./halo_cov.o \
+		./perturbation_cov.o \
+		./non_gaussian_cov.o \
+		./ssc_cov.o \
+		./operators_cov.o \
+		./mask_cov.o \
 		./pt_cfastpt.o
 
 CPPSOURCES += \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/generic_interface_cov.cpp \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/matrix_interface_cov.cpp \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/components_interface_cov.cpp \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/production_interface_cov.cpp \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/python_components_cov.cpp \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/components_wrapper_cov.cpp \
+		${ROOTDIR}/external_modules/code/cosmolike/covariances/covariance_wrapper_cov.cpp \
 		${ROOTDIR}/external_modules/code/cosmolike/generic_interface.cpp \
 		${ROOTDIR}/external_modules/code/cosmolike/cosmo2D_wrapper.cpp \
-		${ROOTDIR}/external_modules/code/cosmolike/cosmo2D_scuts_wrapper.cpp
+		${ROOTDIR}/external_modules/code/cosmolike/cosmo2D_scuts_wrapper.cpp \
+		${ROOTDIR}/external_modules/code/cosmolike/halo_wrapper.cpp
  
 OBJECTCPP += \
+		./generic_interface_cov.o \
+		./matrix_interface_cov.o \
+		./components_interface_cov.o \
+		./production_interface_cov.o \
+		./python_components_cov.o \
+		./components_wrapper_cov.o \
+		./covariance_wrapper_cov.o \
 		./generic_interface.o \
 		./cosmo2D_wrapper.o \
-		./cosmo2D_scuts_wrapper.o
+		./cosmo2D_scuts_wrapper.o \
+		./halo_wrapper.o
+
+# Covariance generation is optional. Every covariance source and object ends
+# in _cov; omit both the kernels and notebook wrappers from a data-vector build.
+# The matching define also removes their includes and bindings in interface.cpp.
+ifdef IGNORE_COSMOLIKE_DES_Y3_COVARIANCE
+CXXFLAGS += -DCOSMOLIKE_NO_COVARIANCE
+CSOURCES := $(filter-out %_cov.c,$(CSOURCES))
+OBJECTC := $(filter-out %_cov.o,$(OBJECTC))
+CPPSOURCES := $(filter-out %_cov.cpp,$(CPPSOURCES))
+OBJECTCPP := $(filter-out %_cov.o,$(OBJECTCPP))
+endif
 
 $(OBJECTC): $(CSOURCES)
 	$(CC) $(CFLAGS) -fPIC -c $(CSOURCES)

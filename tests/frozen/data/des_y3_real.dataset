@@ -1,0 +1,12 @@
+data_file = des_y3_unblinded_final.txt
+cov_file = des_y3_cov_unblinded_final.txt
+mask_file = 3x2pt_baseline.mask
+nz_lens_file = des_y3_lens.nz
+nz_source_file = des_y3_source.nz
+lens_ntomo = 5
+source_ntomo = 4
+n_theta = 20
+theta_min_arcmin = 2.5
+theta_max_arcmin = 250.
+baryon_pca_file = pca.txt
+all_sims_hdf5_file = baryons_logPkR.h5

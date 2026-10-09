@@ -1,3 +1,26 @@
+"""Triangle plot 2: DES-Y3 cosmic shear vs DES-Y3 3x2pt.
+
+The chains, read from ../chains/ (relative to the folder the script runs
+in), are EXAMPLE_MCMC1 (DES-Y3 cosmic shear with TATT, written by
+EXAMPLE_MCMC1.yaml) and EXAMPLE_MCMC2 (DES-Y3 3x2pt with TATT, written by
+EXAMPLE_MCMC2.yaml).
+
+Each chain is loaded with GetDist (the first half discarded as burn-in),
+receives two derived parameters, gamma = Omega_m h and SS8 = S_8 = sigma_8
+(Omega_m/0.3)^0.5, and is saved with them as the hidden text files
+.VM_P2_TMP1 and .VM_P2_TMP2 in the current folder. The figure shows the
+cosmological parameters (omegam, sigma8, As_1e9, ns, S_8, omegab, H0, w,
+wa); g.export() writes it as plot2.pdf, named after the script, in the
+current folder.
+
+Run from the plots/ folder, with the cocoa environment active:
+
+    cd ./projects/des_y3/plots
+    python plot2.py
+
+plot_all.sh runs plot1.py, plot2.py and plot3.py the same way.
+"""
+
 import getdist.plots as gplot
 from getdist import MCSamples
 from getdist import loadMCSamples
@@ -7,7 +30,9 @@ import subprocess
 import matplotlib.pyplot as plt
 import numpy as np
 
-# GENERAL PLOT OPTIONS
+# Figure style: STIX fonts for text and mathematics, ticks on the
+# bottom and left axes, a grid of zero line width (invisible), and a
+# tight bounding box with PDF as the default output format.
 matplotlib.rcParams['mathtext.fontset'] = 'stix'
 matplotlib.rcParams['font.family'] = 'STIXGeneral'
 matplotlib.rcParams['mathtext.rm'] = 'Bitstream Vera Sans'
@@ -28,14 +53,22 @@ matplotlib.rcParams['savefig.bbox'] = 'tight'
 matplotlib.rcParams['savefig.format'] = 'pdf'
 
 parameter = [u'omegam',u'sigma8', u'As_1e9', u'ns', u'SS8', u'omegab', u'H0', u'w', u'wa']
+# The folder the script runs in; the chains are read from ../chains
+# relative to it, and the temporary chain files are written into it.
 chaindir=os.getcwd()
 
+# GetDist analysis settings. ignore_rows 0.5 discards the first half of
+# each chain as burn-in; 0.35 is the width of the smoothing kernel of
+# the 1D and 2D density estimates; range_confidence sets the confidence
+# limit that fixes each parameter's plotted range. The second set reads
+# the saved files, whose burn-in is already removed (ignore_rows 0).
 analysissettings={'smooth_scale_1D':0.35,'smooth_scale_2D':0.35,'ignore_rows': u'0.5',
 'range_confidence' : u'0.01'}
 
 analysissettings2={'smooth_scale_1D':0.35,'smooth_scale_2D':0.35,'ignore_rows': u'0.0',
 'range_confidence' : u'0.01'}
 
+# The two chains compared, by the output prefix Cobaya gave them
 root_chains = (
   'EXAMPLE_MCMC1',
   'EXAMPLE_MCMC2'
@@ -45,6 +78,10 @@ root_chains = (
 # --------------------------------------------------------------------------------
 samples=loadMCSamples(chaindir + '/../chains/' + root_chains[0],settings=analysissettings)
 p = samples.getParams()
+# gamma = Omega_m h, the shape parameter of the matter power spectrum.
+# s8omegamp5 = sigma_8 Omega_m^0.5 is a derived parameter of the
+# chain, and 0.5477225575 = sqrt(0.3), so SS8 = sigma_8 (Omega_m/0.3)^0.5,
+# the S_8 of weak-lensing analyses.
 samples.addDerived(p.omegam*p.H0/100.,name='gamma',label='{\\Omega_m h}')
 samples.addDerived(p.s8omegamp5/0.5477225575,name='SS8',label='{S_8}')
 samples.saveAsText(chaindir + '/.VM_P2_TMP1')
@@ -56,7 +93,9 @@ samples.addDerived(p.s8omegamp5/0.5477225575,name='SS8',label='{S_8}')
 samples.saveAsText(chaindir + '/.VM_P2_TMP2')
 # --------------------------------------------------------------------------------
 
-#GET DIST PLOT SETUP
+# GetDist triangle-plot settings: tick rotation, contour and legend
+# style, font sizes and the opacity of filled contours; chain_dir is
+# where GetDist looks for the saved chain files.
 g=gplot.getSubplotPlotter(chain_dir=chaindir,analysis_settings=analysissettings2,width_inch=9.5)
 g.settings.axis_tick_x_rotation=65
 g.settings.lw_contour = 1.2
@@ -68,6 +107,10 @@ g.settings.alpha_filled_add = 0.85
 g.settings.lab_fontsize=15.5
 g.legend_labels=False
 
+# None: no third parameter colors the 2D panels. The plot draws the
+# saved chains in order with one style each: the first filled in light
+# coral, the second as dashed black lines (the third style entry is
+# unused with two chains); legend_loc is in figure coordinates.
 param_3d = None
 g.triangle_plot([chaindir + '/.VM_P2_TMP1', 
                  chaindir + '/.VM_P2_TMP2'],
@@ -88,4 +131,6 @@ legend_labels=[
 ],
 legend_loc=(0.48, 0.80))
 
+# export() without a file name writes <script name>.pdf in the
+# current folder
 g.export()

@@ -1,0 +1,12 @@
+data_file = 2pt_NG_mcal_1101.txt
+cov_file = des_y1_cov.txt
+mask_file = mask_Y1_mcal
+nz_lens_file = des_y1_lens.nz
+nz_source_file = des_y1_source.nz
+lens_ntomo = 5
+source_ntomo = 4
+n_theta = 20
+theta_min_arcmin = 2.5
+theta_max_arcmin = 250.
+#baryon_pca_file = y1pca.txt
+all_sims_hdf5_file = baryons_logPkR.h5

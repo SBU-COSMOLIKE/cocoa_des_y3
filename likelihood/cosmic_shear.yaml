@@ -1,7 +1,16 @@
 path: null
 data_file: DES_Y3.dataset
 accuracyboost: 1.0
+internal_accuracyboost: 1.0 # C-FAST-PT convolution grid / output grid
+# refinements on top of accuracyboost (which multiplies them too):
+# the non-Limber FFTLog chi grid, and the z nodes of the P(k) tables
+nonlimber_accuracyboost: 1.0
+pk_z_refinement: 1
 integration_accuracy: 0
+# n(z) interpolation: 0 = cubic spline, 1 = linear, 2+ = Steffen (monotone)
+photoz_interpolation_type: 0
+# n(z) file z column: 0 = Z_LOW (left bin edges), 1 = Z_MID (sample points)
+photoz_zmid_convention: 0
 lmax: 50000 
 kmax_boltzmann: 7.5
 non_linear_emul: 2
@@ -25,7 +34,8 @@ which_bsims_add_on_dv: "antilles-2"
 use_baryon_pca: False
 create_baryon_pca: False
 baryon_pca_select_sims: "antilles-2-99/antilles-101-378/antilles-380-400"
-filename_baryon_pca: "./projects/desy1xplanck/chains/pca.txt"
+filename_baryon_pca: "./projects/des_y3/chains/pca.txt"
+external_baryon_suppression: False
 
 print_datavector: False
 print_datavector_file: "./projects/des_y3/chains/theory.modelvector"
