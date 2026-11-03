@@ -1,0 +1,21 @@
+{
+  "project": "des_y3",
+  "default_accuracyboost": 1.0,
+  "default_integration_accuracy": 0,
+  "refined_accuracyboost": 5.0,
+  "refined_integration_accuracy": 7,
+  "original_default_to_refined": 0.005614897107346897,
+  "reconstruction_distances": {
+    "original_to_three": 0.07438433126443353,
+    "three_to_five": 0.0013642462601458614,
+    "three_to_seven": 0.0036886859245078285,
+    "five_to_seven": 0.0006181514032063631
+  },
+  "redshift_moment_refinement_delta_chi2": {
+    "original": 3.1476636564126742e-24,
+    "three": 6.149070893355952e-18,
+    "five": 2.299634202907497e-17,
+    "seven": 5.606278389616338e-16
+  },
+  "default_vector_unchanged_bitwise": true
+}

@@ -1,0 +1,393 @@
+{
+  "project": "des_y3",
+  "project_label": "DES Y3",
+  "input_files": {
+    "source_file": {
+      "name": "des_y3_source.nz",
+      "sha256": "289771a3766fbe46d6d2a61436a31e0aef6693e4c9c0e92b4e3cc72d607d9477"
+    },
+    "lens_file": {
+      "name": "des_y3_lens.nz",
+      "sha256": "ac4e7995758fa6f812dc4c1744eac2edf936018c20020ed265f679d4befadc70"
+    },
+    "cov_file": {
+      "name": "des_y3_cov_unblinded_final.txt",
+      "sha256": "0ae78cd8b95cf0055525bc19475a1d328eb850572d1c43e721a7cf41aa0830c0"
+    },
+    "mask_file": {
+      "name": "3x2pt_baseline.mask",
+      "sha256": "a50d8afdc25810391cb737990683bf933c7391650720e195af17b68039a3806d"
+    },
+    "data_vector_file": {
+      "name": "synthetic_des_y3.modelvector",
+      "sha256": "537458df278e45d157208fea9b4cc73769cf7e0558f5c7112ca9b670256b5210"
+    }
+  },
+  "probability_audit": {
+    "final_grid_factor": 25,
+    "shift": 0,
+    "lens_stretch": 1,
+    "rows": [
+      {
+        "sample": "source",
+        "arm": "original",
+        "tomographic_bin": 1,
+        "total_area": 0.9991756648091122,
+        "total_area_error_pct": -0.08243351908877594,
+        "bin_redistribution_pct": 0.1802382811075241,
+        "negative_input_cells": 12,
+        "two_vs_four_point_max_difference": 1.3877787807814457e-17
+      },
+      {
+        "sample": "source",
+        "arm": "original",
+        "tomographic_bin": 2,
+        "total_area": 0.9989587991127933,
+        "total_area_error_pct": -0.10412008872067169,
+        "bin_redistribution_pct": 0.19352889796305758,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 6.938893903907228e-18
+      },
+      {
+        "sample": "source",
+        "arm": "original",
+        "tomographic_bin": 3,
+        "total_area": 0.9998524560470725,
+        "total_area_error_pct": -0.01475439529274869,
+        "bin_redistribution_pct": 0.1631032891745932,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 1.0408340855860843e-17
+      },
+      {
+        "sample": "source",
+        "arm": "original",
+        "tomographic_bin": 4,
+        "total_area": 0.9989391233750605,
+        "total_area_error_pct": -0.10608766249394774,
+        "bin_redistribution_pct": 0.2567845540908674,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 6.938893903907228e-18
+      },
+      {
+        "sample": "lens",
+        "arm": "original",
+        "tomographic_bin": 1,
+        "total_area": 0.9999990460993997,
+        "total_area_error_pct": -9.539006002867723e-05,
+        "bin_redistribution_pct": 0.1587003062307513,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 1.734723475976807e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "original",
+        "tomographic_bin": 2,
+        "total_area": 1.0000000001268279,
+        "total_area_error_pct": 1.2682788153028923e-08,
+        "bin_redistribution_pct": 0.1581004245767188,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 4.163336342344337e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "original",
+        "tomographic_bin": 3,
+        "total_area": 0.9999999999465761,
+        "total_area_error_pct": -5.342393194496253e-09,
+        "bin_redistribution_pct": 0.09814912278639294,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 2.7755575615628914e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "original",
+        "tomographic_bin": 4,
+        "total_area": 1.0000000000035327,
+        "total_area_error_pct": 3.532729664357248e-10,
+        "bin_redistribution_pct": 0.08935736341765074,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 2.7755575615628914e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "original",
+        "tomographic_bin": 5,
+        "total_area": 1.0000000000160314,
+        "total_area_error_pct": 1.6031398430982335e-09,
+        "bin_redistribution_pct": 0.11848013677911814,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 5.551115123125783e-17
+      },
+      {
+        "sample": "source",
+        "arm": "three",
+        "tomographic_bin": 1,
+        "total_area": 0.9999999999999996,
+        "total_area_error_pct": -4.440892098500626e-14,
+        "bin_redistribution_pct": 0.07260492392984562,
+        "negative_input_cells": 12,
+        "two_vs_four_point_max_difference": 1.0408340855860843e-17
+      },
+      {
+        "sample": "source",
+        "arm": "three",
+        "tomographic_bin": 2,
+        "total_area": 1.000000000000002,
+        "total_area_error_pct": 1.9984014443252818e-13,
+        "bin_redistribution_pct": 0.0752806994974761,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 1.3877787807814457e-17
+      },
+      {
+        "sample": "source",
+        "arm": "three",
+        "tomographic_bin": 3,
+        "total_area": 1.0000000000000004,
+        "total_area_error_pct": 4.440892098500626e-14,
+        "bin_redistribution_pct": 0.08928227170751289,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 1.734723475976807e-17
+      },
+      {
+        "sample": "source",
+        "arm": "three",
+        "tomographic_bin": 4,
+        "total_area": 1.000000000000001,
+        "total_area_error_pct": 1.1102230246251565e-13,
+        "bin_redistribution_pct": 0.10538846858326768,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 1.3877787807814457e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "three",
+        "tomographic_bin": 1,
+        "total_area": 1.0000000000000007,
+        "total_area_error_pct": 6.661338147750939e-14,
+        "bin_redistribution_pct": 0.10800377239541634,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 2.7755575615628914e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "three",
+        "tomographic_bin": 2,
+        "total_area": 0.9999999999999994,
+        "total_area_error_pct": -5.551115123125783e-14,
+        "bin_redistribution_pct": 0.10776389487830826,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 2.7755575615628914e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "three",
+        "tomographic_bin": 3,
+        "total_area": 1.0000000000000004,
+        "total_area_error_pct": 4.440892098500626e-14,
+        "bin_redistribution_pct": 0.07025758597187558,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 4.163336342344337e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "three",
+        "tomographic_bin": 4,
+        "total_area": 0.9999999999999997,
+        "total_area_error_pct": -3.3306690738754696e-14,
+        "bin_redistribution_pct": 0.061821057828135684,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 2.7755575615628914e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "three",
+        "tomographic_bin": 5,
+        "total_area": 1.0000000000000004,
+        "total_area_error_pct": 4.440892098500626e-14,
+        "bin_redistribution_pct": 0.08598905526999492,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 5.551115123125783e-17
+      },
+      {
+        "sample": "source",
+        "arm": "five",
+        "tomographic_bin": 1,
+        "total_area": 0.9999999999999993,
+        "total_area_error_pct": -6.661338147750939e-14,
+        "bin_redistribution_pct": 0.04356295435790797,
+        "negative_input_cells": 12,
+        "two_vs_four_point_max_difference": 2.0816681711721685e-17
+      },
+      {
+        "sample": "source",
+        "arm": "five",
+        "tomographic_bin": 2,
+        "total_area": 1.000000000000002,
+        "total_area_error_pct": 1.9984014443252818e-13,
+        "bin_redistribution_pct": 0.04516841969849863,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 1.3877787807814457e-17
+      },
+      {
+        "sample": "source",
+        "arm": "five",
+        "tomographic_bin": 3,
+        "total_area": 1.0000000000000007,
+        "total_area_error_pct": 6.661338147750939e-14,
+        "bin_redistribution_pct": 0.053569363024518694,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 1.3877787807814457e-17
+      },
+      {
+        "sample": "source",
+        "arm": "five",
+        "tomographic_bin": 4,
+        "total_area": 1.000000000000001,
+        "total_area_error_pct": 1.1102230246251565e-13,
+        "bin_redistribution_pct": 0.06323308114997682,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 1.734723475976807e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "five",
+        "tomographic_bin": 1,
+        "total_area": 1.0000000000000007,
+        "total_area_error_pct": 6.661338147750939e-14,
+        "bin_redistribution_pct": 0.06480226343725334,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 2.0816681711721685e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "five",
+        "tomographic_bin": 2,
+        "total_area": 1.0000000000000002,
+        "total_area_error_pct": 2.220446049250313e-14,
+        "bin_redistribution_pct": 0.06465833692701392,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 4.85722573273506e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "five",
+        "tomographic_bin": 3,
+        "total_area": 1.0000000000000004,
+        "total_area_error_pct": 4.440892098500626e-14,
+        "bin_redistribution_pct": 0.04215455158315397,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 2.7755575615628914e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "five",
+        "tomographic_bin": 4,
+        "total_area": 0.9999999999999999,
+        "total_area_error_pct": -1.1102230246251565e-14,
+        "bin_redistribution_pct": 0.03709263469688842,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 2.0816681711721685e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "five",
+        "tomographic_bin": 5,
+        "total_area": 1.0000000000000002,
+        "total_area_error_pct": 2.220446049250313e-14,
+        "bin_redistribution_pct": 0.051593433161982505,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 5.551115123125783e-17
+      },
+      {
+        "sample": "source",
+        "arm": "seven",
+        "tomographic_bin": 1,
+        "total_area": 0.9999999999999997,
+        "total_area_error_pct": -3.3306690738754696e-14,
+        "bin_redistribution_pct": 0.031116395969937753,
+        "negative_input_cells": 12,
+        "two_vs_four_point_max_difference": 1.734723475976807e-17
+      },
+      {
+        "sample": "source",
+        "arm": "seven",
+        "tomographic_bin": 2,
+        "total_area": 1.0000000000000022,
+        "total_area_error_pct": 2.220446049250313e-13,
+        "bin_redistribution_pct": 0.03226315692750494,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 1.3877787807814457e-17
+      },
+      {
+        "sample": "source",
+        "arm": "seven",
+        "tomographic_bin": 3,
+        "total_area": 1.0000000000000007,
+        "total_area_error_pct": 6.661338147750939e-14,
+        "bin_redistribution_pct": 0.038263830731799474,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 1.3877787807814457e-17
+      },
+      {
+        "sample": "source",
+        "arm": "seven",
+        "tomographic_bin": 4,
+        "total_area": 1.000000000000001,
+        "total_area_error_pct": 1.1102230246251565e-13,
+        "bin_redistribution_pct": 0.04516648653570042,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 1.3877787807814457e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "seven",
+        "tomographic_bin": 1,
+        "total_area": 1.0000000000000004,
+        "total_area_error_pct": 4.440892098500626e-14,
+        "bin_redistribution_pct": 0.04628733102660783,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 5.551115123125783e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "seven",
+        "tomographic_bin": 2,
+        "total_area": 1.0,
+        "total_area_error_pct": 0.0,
+        "bin_redistribution_pct": 0.04618452637642619,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 5.551115123125783e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "seven",
+        "tomographic_bin": 3,
+        "total_area": 1.0000000000000002,
+        "total_area_error_pct": 2.220446049250313e-14,
+        "bin_redistribution_pct": 0.030110393987950946,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 5.551115123125783e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "seven",
+        "tomographic_bin": 4,
+        "total_area": 0.9999999999999999,
+        "total_area_error_pct": -1.1102230246251565e-14,
+        "bin_redistribution_pct": 0.02649473906920621,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 2.7755575615628914e-17
+      },
+      {
+        "sample": "lens",
+        "arm": "seven",
+        "tomographic_bin": 5,
+        "total_area": 1.0,
+        "total_area_error_pct": 0.0,
+        "bin_redistribution_pct": 0.03685245225856346,
+        "negative_input_cells": 0,
+        "two_vs_four_point_max_difference": 5.551115123125783e-17
+      }
+    ]
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "project": "des_y3",
+  "part": "defaults",
+  "point": {
+    "As_1e9": 2.1,
+    "DES_A1_1": 0.606102,
+    "DES_A1_2": -1.51541,
+    "DES_A2_1": 0.01,
+    "DES_A2_2": -1.5448080290038528,
+    "DES_B1_1": 1.72716,
+    "DES_B1_2": 1.65168,
+    "DES_B1_3": 1.61423,
+    "DES_B1_4": 1.92886,
+    "DES_B1_5": 2.11633,
+    "DES_BTA_1": 0.8154011496506723,
+    "DES_DZ_L1": 0.00457604,
+    "DES_DZ_L2": 0.000309875,
+    "DES_DZ_L3": 0.00855907,
+    "DES_DZ_L4": -0.00316269,
+    "DES_DZ_L5": -0.0146753,
+    "DES_DZ_S1": 0.0414632,
+    "DES_DZ_S2": 0.00147332,
+    "DES_DZ_S3": 0.0237035,
+    "DES_DZ_S4": -0.0773436,
+    "DES_M1": 0.0191832,
+    "DES_M2": -0.0431752,
+    "DES_M3": -0.034961,
+    "DES_M4": -0.0158096,
+    "H0": 67.32,
+    "mnu": 0.06,
+    "ns": 0.96605,
+    "omegab": 0.04,
+    "omegam": 0.3,
+    "w": -0.9,
+    "w0pwa": -0.9
+  },
+  "input_files": {
+    "source_file": {
+      "name": "des_y3_source.nz",
+      "sha256": "289771a3766fbe46d6d2a61436a31e0aef6693e4c9c0e92b4e3cc72d607d9477"
+    },
+    "lens_file": {
+      "name": "des_y3_lens.nz",
+      "sha256": "ac4e7995758fa6f812dc4c1744eac2edf936018c20020ed265f679d4befadc70"
+    },
+    "cov_file": {
+      "name": "des_y3_cov_unblinded_final.txt",
+      "sha256": "0ae78cd8b95cf0055525bc19475a1d328eb850572d1c43e721a7cf41aa0830c0"
+    },
+    "mask_file": {
+      "name": "3x2pt_baseline.mask",
+      "sha256": "a50d8afdc25810391cb737990683bf933c7391650720e195af17b68039a3806d"
+    },
+    "data_vector_file": {
+      "name": "synthetic_des_y3.modelvector",
+      "sha256": "537458df278e45d157208fea9b4cc73769cf7e0558f5c7112ca9b670256b5210"
+    }
+  },
+  "accuracyboost": 1.0,
+  "integration_accuracy": 0,
+  "defaults_yaml_sha256": "2c3680ac554029277ff9a8ead48b8ee4cade174b71cca8e0d40a91d7cf10cfa8",
+  "interface_sha256": "908e3a3f8dad1a26cf49f7745b4b91a0068b239ed6dfb6f7f04b96bfc75b3ff7",
+  "study_sha256": "ec356f5fe96ce3c418449392057aba238f77378e798274e807d4f70ff95d821c",
+  "delta_chi2": {},
+  "elapsed_seconds": 3.2990010830108076,
+  "thread_environment": {
+    "OMP_NUM_THREADS": "8",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "inverse_covariance_sha256": "d2149286251fdff62f5d095aaa515f76c0f62d2f3345eb551a4d81a038feceb7"
+}

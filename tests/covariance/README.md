@@ -6,9 +6,28 @@ These tests require the optional covariance build. Follow the
 With the default data-vector-only build this sector reports skips; the
 separate `tests/data_vector` suite remains available.
 
-These checks exercise this project's galaxy/shear forecast adapter and
-compiled covariance bindings. They use the project's redshift files and
-catalog inputs, with small numerical grids and three measured rows.
+The sector runs the shared
+[project forecast check](https://github.com/CosmoLike/cocoa-cosmolike-core/blob/main/README.md#cov_forecast_check)
+against this project's galaxy/shear forecast adapter and compiled
+covariance bindings, with this project's redshift files and catalog
+inputs.
+
+This project's run of the shared check pins these specifics:
+
+- Accuracy refinement: `accuracy_boost: 2` with the 96-node quadrature
+  unchanged, and `integration_accuracy: 1` selecting 128 nodes.
+- Component sum: the total equals G + SSC + cNG to a relative 2e-15.
+- Production backend: the production (CLI) backend reproduces the
+  notebook-wrapper matrices bitwise.
+- Output archive: the saved total and row map reload without pickle,
+  with the resolved survey metadata checked.
+
+The independent component references live in
+[LSST Y1's covariance suite](https://github.com/CosmoLike/cocoa_lsst_y1/blob/main/tests/covariance/README.md);
+use the [covariance notebook](../../EXAMPLE_EVALUATE_COVARIANCE.ipynb)
+for full matrices and numerical refinement. The
+[data-vector tests](../data_vector/README.md) check likelihood signals
+and stored reference values separately.
 
 We assume Cocoa is installed, users have run `conda activate cocoa`, the
 shell is Bash and the current folder is `cocoa/Cocoa`.
@@ -17,7 +36,7 @@ shell is Bash and the current folder is `cocoa/Cocoa`.
 
     source start_cocoa.sh
 
-**Step :two:**: compile this project's interface.
+**Step :two:**: compile this project's interface with covariance enabled.
 
     unset IGNORE_COSMOLIKE_DES_Y3_CODE
     unset IGNORE_COSMOLIKE_DES_Y3_COVARIANCE
@@ -26,26 +45,3 @@ shell is Bash and the current folder is `cocoa/Cocoa`.
 **Step :three:**: run the covariance checks.
 
     python -m pytest projects/des_y3/tests/covariance
-
-| Check | Purpose |
-| --- | --- |
-| Project layout | Verify the full angular and Fourier vector lengths from the measured row map. |
-| Accuracy refinement | Keep measurement bins fixed while refining the tables (`accuracy_boost: 2`, with the 96-node quadrature unchanged) and the quadrature (`integration_accuracy: 1`, 128 nodes). |
-| Real-space components | Check finite, symmetric G, SSC, cNG and total matrices for a measured subset. |
-| Fourier components | Check the same properties for bandpowers. |
-| Component sum | Check that the total equals G + SSC + cNG to a relative 2e-15. |
-| Production backend | Check that the production (CLI) backend reproduces the notebook-wrapper matrices bitwise. |
-| Thread repeatability | Compare every component bitwise with one and eight OpenMP threads. |
-| Positive total | Check variance positivity for every direction of the tested subset. |
-| Output archive | Reload the saved total and row map without pickle and check the resolved survey metadata. |
-
-The [shared component tests](https://github.com/CosmoLike/cocoa_lsst_y1/blob/main/tests/covariance/README.md)
-contain independent algebra and projection references. This project check
-covers its binding and inputs; it does not duplicate those references.
-Use the [covariance notebook](../../EXAMPLE_EVALUATE_COVARIANCE.ipynb)
-for full matrices and numerical refinement. Subset positivity alone does
-not establish full-matrix positivity or parameter-error convergence.
-
-The [data-vector tests](../data_vector/README.md) check likelihood signals
-and stored reference values separately. No stored covariance or reference
-value is replaced by this test.
