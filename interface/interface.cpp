@@ -172,6 +172,17 @@ PYBIND11_MODULE(cosmolike_des_y3_interface, m)
     );
 
 
+  m.def("init_lowrank_nonlimber_gg",
+      &cosmolike_interface::init_lowrank_nonlimber_gg,
+      "Non-Limber galaxy clustering: flag 0 = FKEM (default), 1 = the "
+      "low-rank DD engine (per-bin SVD of sqrt(P_g), nrank kept ranks, "
+      "its own ell cap lmax; needs include_HOD_GX = 0)",
+      (py::arg("flag") = 0).none(false),
+      (py::arg("nrank") = 5).none(false),
+      (py::arg("lmax") = 150).none(false)
+    );
+
+
   m.def("init_baryons_contamination",
       py::overload_cast<std::string, std::string>(
          &cosmolike_interface::init_baryons_contamination),

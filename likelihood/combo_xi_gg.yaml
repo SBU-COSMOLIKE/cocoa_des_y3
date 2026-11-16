@@ -25,6 +25,15 @@ include_HOD_GX: 0
 # shear and ggl IA: 0 = the IA_model above, 1 = halo-model IA
 # (Fortuna et al. 2021; NLA only, Limber gs, include_HOD_GX = 0)
 include_halo_IA: 0
+# non-Limber gg engine: 0 = FKEM (the default), 1 = the low-rank DD
+# engine - the density-density term carries the full one-loop P_g
+# through a per-bin SVD of sqrt(P_g), with no Limber hand-off below
+# its ell cap (needs include_HOD_GX = 0 and adopt_limber_gg = 0)
+nonlimber_lowrank_gg: 0
+# SVD ranks kept per lens bin (1-16)
+nonlimber_lowrank_rank: 5
+# the low-rank path's own non-Limber ell cap
+nonlimber_lowrank_lmax: 150
 lmax: 60000 
 kmax_boltzmann: 7.5
 speed: 1

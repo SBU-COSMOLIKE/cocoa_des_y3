@@ -388,6 +388,17 @@ class _cosmolike_prototype_base(DataSetLikelihood):
     # 0 = the init_IA model, 1 = halo-model IA (Fortuna et al. 2021)
     ci.init_include_halo_IA(
         include_halo_IA=int(getattr(self, "include_halo_IA", 0)))
+    # Low-rank non-Limber galaxy clustering: 0 = the FKEM split
+    # (bit-identical default), 1 = the density-density term carries the
+    # full one-loop P_g through a per-bin SVD of sqrt(P_g), with its
+    # own ell cap. Set at every initialize: the three values are
+    # cosmolike C globals shared by the whole process, so a likelihood
+    # that leaves them unset would inherit the previous likelihood's
+    # choice.
+    ci.init_lowrank_nonlimber_gg(
+        flag=int(getattr(self, "nonlimber_lowrank_gg", 0)),
+        nrank=int(getattr(self, "nonlimber_lowrank_rank", 5)),
+        lmax=int(getattr(self, "nonlimber_lowrank_lmax", 150)))
     # Halo statistics use the cold dark matter + baryon spectrum P_cb. The
     # hybrid emulators (use_emulator = 2) have no separate cb spectrum, so
     # P_cb comes from the small-scale ratio of get_neutrino_inputs.
