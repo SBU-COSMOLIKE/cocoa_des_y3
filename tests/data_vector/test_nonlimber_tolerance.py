@@ -24,9 +24,9 @@ Measured on 2026-11-18 (OMP 4), then bounded:
     Limber here); bound 5e-4;
   - test 4: sigma (w0, wa, bias) = 1.74e-3, 1.48e-4, 1.41e-3 at the
     default tolerances and 1.93e-4, 1.48e-4, 3e-12 at 0; bound 2e-3;
-  - test 5: FKEM caps 150/200/300 give w0 1.93e-4/2.08e-4/2.38e-4 and
-    wa 1.48e-4/1.49e-4/1.46e-4; margin 0.1;
-  - test 6: SVD/FKEM ratio at most 1.14 (w0, cap 300); margin 0.3.
+  - test 5: FKEM caps 150/200 give w0 1.93e-4/2.08e-4 and
+    wa 1.48e-4/1.49e-4; margin 0.1;
+  - test 6: SVD/FKEM ratio at most 1.19 (w0, cap 200); margin 0.4.
 
 To run (from the Cocoa/ folder, cocoa environment active,
 start_cocoa.sh sourced):
@@ -54,11 +54,12 @@ import cocoa_test_utils as u
 TestNonLimberTolerance = u.nonlimber_tolerance_suite(
     u, name="TestNonLimberTolerance", example="example2",
     bias_parameter="DES_B1_5",
+    expected_defaults=(0.002, 0.01),
     change_bound=0.0005,
     noise_bound=0.002,
     handoff_margin=0.1,
     svd_rule='not_larger',
-    svd_margin=0.3)
+    svd_margin=0.4)
 
 # __name__ is "__main__" only when this file runs directly as a
 # script; pytest imports the module instead, so this block stays

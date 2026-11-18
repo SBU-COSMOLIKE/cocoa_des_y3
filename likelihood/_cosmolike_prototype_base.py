@@ -439,6 +439,10 @@ class _cosmolike_prototype_base(DataSetLikelihood):
       ci.init_accuracy_boost(accuracy_boost=self.accuracyboost, 
                              integration_accuracy=int(self.integration_accuracy))
       ci.init_cosmo_runmode(is_linear=False)
+      # the FKEM non-Limber cap (limits.LMAX_NOLIMBER): C_gg and C_gs
+      # are non-Limber below it and Limber above; set at every
+      # initialize so no previous likelihood's cap survives
+      ci.init_lmax_nonlimber(lmax=int(getattr(self, "lmax_nonlimber", 150)))
 
       # external_nz_modeling: read the n(z) tables into the arrays
       # self.lens_nz and self.source_nz, which set_lens_related and

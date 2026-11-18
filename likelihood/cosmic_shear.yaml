@@ -10,6 +10,9 @@ pk_z_refinement: 1
 # 0 = no early exit (Fisher derivatives); accuracyboost > 1 shrinks them
 nonlimber_tolerance_gg: 0.002
 nonlimber_tolerance_gs: 0.01
+# the FKEM non-Limber cap (limits.LMAX_NOLIMBER): C_gg and C_gs are
+# non-Limber below it and Limber above; 150 is the cosmolike default
+lmax_nonlimber: 150
 integration_accuracy: 0
 # n(z) interpolation: 0 = cubic spline, 1 = linear, 2+ = Steffen (monotone)
 # 0: original midpoint curve (default); 1: histogram + Akima.
