@@ -381,6 +381,16 @@ class _cosmolike_prototype_base(DataSetLikelihood):
 
     ci.init_adopt_limber_gg(
         adopt_limber_gg=int(getattr(self, "adopt_limber_gg", 0)))
+    # Early-exit tolerances of the non-Limber real-space C_l: a lens bin
+    # (w(theta), gg) or a lens-source pair (gamma_t, gs) switches to Limber
+    # once its C_l agrees with Limber within the tolerance; 0 = no early
+    # exit (Fisher derivatives: the switch multipole moves with the
+    # parameters). Above accuracyboost 1 the C_l use the tolerance
+    # divided by 1 + 2 (accuracyboost - 1). The Fourier data vectors
+    # never take the exit.
+    ci.init_nonlimber_tolerance(
+        gg_tol=float(getattr(self, "nonlimber_tolerance_gg", 0.002)),
+        gs_tol=float(getattr(self, "nonlimber_tolerance_gs", 0.01)))
     # 0 = perturbative galaxy bias, 1 = halo-model (HOD) galaxy power;
     # always set, so a model never inherits the previous model's value
     ci.init_include_HOD_GX(

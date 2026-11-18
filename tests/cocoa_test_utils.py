@@ -358,6 +358,7 @@ w_gg_scale_cut_suite = _cct_suites.w_gg_scale_cut_suite
 cache_ladder_suite = _cct_suites.cache_ladder_suite
 setting_sequence_suite = _cct_suites.setting_sequence_suite
 common_sequences = _cct_suites.common_sequences
+nonlimber_tolerance_suite = _cct_suites.nonlimber_tolerance_suite
 baryon_accuracy_suite = _cct_suites.baryon_accuracy_suite
 baryon_drift_suite = _cct_suites.baryon_drift_suite
 freeze_main = _cct_freeze.freeze_main

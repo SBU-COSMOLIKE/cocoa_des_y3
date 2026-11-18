@@ -157,6 +157,31 @@ PYBIND11_MODULE(cosmolike_des_y3_interface, m)
       (py::arg("adopt_limber_gg") = 0).none(false)
     );
 
+  m.def("init_lmax_nonlimber",
+      &cosmolike_interface::init_lmax_nonlimber,
+      "Multipole cap of the FKEM non-Limber paths (limits.LMAX_NOLIMBER; "
+      "default 150): below it FKEM, above it Limber",
+      py::arg("lmax").none(false)
+    );
+
+  m.def("init_nonlimber_tolerance",
+      &cosmolike_interface::init_nonlimber_tolerance,
+      "Early-exit tolerances of the non-Limber real-space C_l (gg_tol: "
+      "w(theta), default 0.002; gs_tol: gamma_t, default 0.01): a bin or "
+      "pair switches to Limber once |C_l/C_l^Limber - 1| < tol; 0 = no "
+      "early exit. Above accuracy boost 1 the C_l use tol/(1 + 2 (boost "
+      "- 1)). The Fourier data vectors never take the exit",
+      (py::arg("gg_tol") = 0.002).none(false),
+      (py::arg("gs_tol") = 0.01).none(false)
+    );
+
+  m.def("get_nonlimber_tolerance",
+      &cosmolike_interface::get_nonlimber_tolerance,
+      "The (gg, gs) early-exit tolerances the real-space non-Limber C_l "
+      "use now: the init_nonlimber_tolerance settings, divided by "
+      "1 + 2 (accuracy boost - 1) above accuracy boost 1"
+    );
+
   m.def("init_include_HOD_GX",
       &cosmolike_interface::init_include_HOD_GX,
       "Galaxy probes: 0 = perturbative galaxy bias (default), 1 = "
