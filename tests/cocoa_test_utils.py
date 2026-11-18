@@ -354,6 +354,7 @@ nonlinear_suite = _cct_suites.nonlinear_suite
 photoz_conventions_suite = _cct_suites.photoz_conventions_suite
 nonlimber_suite = _cct_suites.nonlimber_suite
 lowrank_gg_suite = _cct_suites.lowrank_gg_suite
+w_gg_scale_cut_suite = _cct_suites.w_gg_scale_cut_suite
 cache_ladder_suite = _cct_suites.cache_ladder_suite
 setting_sequence_suite = _cct_suites.setting_sequence_suite
 common_sequences = _cct_suites.common_sequences

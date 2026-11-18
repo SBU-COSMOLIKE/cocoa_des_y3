@@ -795,6 +795,50 @@ PYBIND11_MODULE(cosmolike_des_y3_interface, m)
       py::return_value_policy::move
     );
 
+  m.def("w_gg_kwindow_tomo",
+      &cosmolike_interface::w_gg_kwindow_tomo_cpp,
+      "The galaxy clustering w(theta), rows = lens bins, columns = "
+      "angular bins, with the k window of the UV-fraction scale cut "
+      "(arXiv:2603.13031): IR part (keep_ir = 1, modes k <= kmax/D(z), "
+      "kmax in h/Mpc at z = 0, D the linear growth factor with "
+      "D(0) = 1) or UV part (keep_ir = 0); kmax <= 0 gives the full "
+      "w(theta), with the projection the likelihood selected (Limber, "
+      "FKEM or the low-rank engine).",
+      py::arg("kmax").none(false),
+      py::arg("keep_ir") = 1,
+      py::return_value_policy::move
+    );
+
+  m.def("w_gg_scale_cuts_tomo",
+      &cosmolike_interface::w_gg_scale_cuts_tomo_cpp,
+      "The UV-fraction scale cut (arXiv:2603.13031) for the galaxy "
+      "clustering w(theta) of every lens bin. Per kmax (h/Mpc at z = 0; "
+      "the cut is kmax/D(z), D the linear growth factor with D(0) = 1), "
+      "C_l is split into IR and UV parts by a step on the 3D power "
+      "spectrum and projected with the bin-averaged Legendre kernel of "
+      "w(theta); scanning from the largest angle down, an angular bin "
+      "is kept while |w_UV|/(|w_UV| + |w_IR|) < alpha. Returns a dict "
+      "of theta and theta_min (arcmin), mask, uv_fraction, full and ir "
+      "arrays. Runs the projection the likelihood selected (Limber, "
+      "FKEM or the low-rank engine).",
+      py::arg("kmax").none(false),
+      py::arg("alpha") = 0.05,
+      py::return_value_policy::move
+    );
+
+  m.def("C_gg_kwindow_tomo_ells",
+      &cosmolike_interface::C_gg_kwindow_tomo_ells_cpp,
+      "The Fourier gg spectra (autos, cross pairs) at the multipoles "
+      "ells (a numpy array) with the k window of the UV-fraction scale "
+      "cut (arXiv:2603.13031): IR part (keep_ir = 1, modes "
+      "k <= kmax/D(z), kmax in h/Mpc at z = 0) or UV part "
+      "(keep_ir = 0); kmax <= 0 gives the full spectra.",
+      py::arg("kmax").none(false),
+      py::arg("keep_ir").none(false),
+      py::arg("ells").none(false),
+      py::return_value_policy::move
+    );
+
   // --------------------------------------------------------------------
   // Halo model (halo.c)
   // --------------------------------------------------------------------
