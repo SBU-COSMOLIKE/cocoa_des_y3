@@ -17,6 +17,16 @@ likelihood:
     IA_code: 0
     IA_redshift_evolution: 3
     use_baryon_pca: False
+# The amplitude cut: every lens bin i keeps (A_s/A_s,fid)(b_i/b_i,fid)^2 <= 8,
+# with A_s the primordial amplitude (sampled as As_1e9 = 10^9 A_s) and b_i the
+# bin's linear galaxy bias (DES_B1_i). The galaxy power of a bin scales as
+# A_s b_i^2, and a fixed relative numerical error of the data vector grows
+# with it against the fiducial covariance (the N-random-models check of
+# lsst_y1, projects/lsst_y1/tests/data_vector/README.md). A point outside
+# the cut has prior -inf, so cobaya never evaluates its likelihood.
+prior:
+  amplitude_cut: "lambda As_1e9, DES_B1_1, DES_B1_2, DES_B1_3, DES_B1_4, DES_B1_5: 0.0 if (As_1e9/2.1)*max((DES_B1_1/1.72716)**2, (DES_B1_2/1.65168)**2, (DES_B1_3/1.61423)**2, (DES_B1_4/1.92886)**2, (DES_B1_5/2.11633)**2) <= 8 else -np.inf"
+
 params:
   As_1e9:
     prior:
