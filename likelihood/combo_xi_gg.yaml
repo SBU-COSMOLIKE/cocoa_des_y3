@@ -6,7 +6,8 @@ internal_accuracyboost: 1.0 # C-FAST-PT convolution grid / output grid
 # the non-Limber FFTLog chi grid, and the z nodes of the P(k) tables
 nonlimber_accuracyboost: 1.0
 pk_z_refinement: 1
-# early-exit tolerances of the non-Limber real-space C_l (w(theta), gamma_t); 0 = no exit
+# early-exit tolerances of the non-Limber real-space C_l (w(theta), gamma_t);
+# 0 = no early exit (Fisher derivatives); accuracyboost > 1 shrinks them
 nonlimber_tolerance_gg: 0.002
 nonlimber_tolerance_gs: 0.01
 integration_accuracy: 0
