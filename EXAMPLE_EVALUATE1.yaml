@@ -69,8 +69,8 @@ params:
     drop: true
   omegam:
     prior:
-      min: 0.1
-      max: 0.9
+      min: 0.2
+      max: 0.5
     ref:
       dist: norm
       loc: 0.316
@@ -89,7 +89,7 @@ params:
     proposal: 0.05
   w0pwa:
     prior:
-      min: -5 
+      min: -3 # w0 + wa > -3: below it the early phantom regime needs a costlier CAMB
       max: -0.01
     ref:
       dist: norm
