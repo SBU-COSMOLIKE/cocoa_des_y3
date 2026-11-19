@@ -5,8 +5,9 @@ internal_accuracyboost: 1.0 # C-FAST-PT convolution grid / output grid
 # refinements on top of accuracyboost (which multiplies them too):
 # the non-Limber FFTLog chi grid, and the z nodes of the P(k) tables
 nonlimber_accuracyboost: 1.0
-# Upper redshift of the non-Limber distance grid; finite and >= 4.
-# Independent of radial sampling; the core default is 4.0.
+# upper redshift of the non-Limber radial grid; this project keeps the core
+# default 4.0: the DES kernels end well below z = 4 (4.5 would move the
+# fiducial 3x2pt vector by delta chi2 = 2.5e-6)
 nonlimber_zmax: 4.0
 pk_z_refinement: 1
 # early-exit tolerances of the non-Limber real-space C_l (w(theta), gamma_t);
