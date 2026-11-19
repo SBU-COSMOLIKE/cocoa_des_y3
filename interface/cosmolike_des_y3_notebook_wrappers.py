@@ -75,6 +75,7 @@ sys.path.insert(0, os.environ["ROOTDIR"] + "/external_modules/code/cosmolike_cor
 # cnu = the shared notebook package (CAMB run, plots, Fisher helpers);
 # ci = this project's compiled cosmolike library
 import cosmolike_notebook_utils as cnu
+from cosmolike_notebook_utils.fisher import nonlimber_derivative_mode
 import cosmolike_des_y3_interface as ci
 
 
@@ -168,6 +169,11 @@ PM_FID = [DES_PM_1, DES_PM_2, DES_PM_3, DES_PM_4, DES_PM_5]
 # same way it does in the other projects. _CONFIG is module-global state:
 # configure() changes it, and every later wrapper call reads it.
 _CONFIG = {
+    # Base early-exit tolerances; Fisher reads temporarily use zero.
+    "nonlimber_tolerance_gg": 0.002,
+    "nonlimber_tolerance_gs": 0.01,
+    # FKEM multipole cap, separate from the low-rank engine cap.
+    "lmax_nonlimber": 150,
     # Upper redshift, independent of sampling; matches this project YAML.
     "nonlimber_zmax": 4.0,
     "lmax": 50000,              # base of the internal C_ell tables
@@ -298,6 +304,10 @@ def init_cosmolike(CLprobe=None, with_data=False, lmax=None):
     allsims = ini.relativeFileName('all_sims_hdf5_file')
     ci.initial_setup()
     ci.init_nonlimber_zmax(zmax=float(_CONFIG["nonlimber_zmax"]))
+    ci.init_nonlimber_tolerance(
+        gg_tol=float(_CONFIG["nonlimber_tolerance_gg"]),
+        gs_tol=float(_CONFIG["nonlimber_tolerance_gs"]))
+    ci.init_lmax_nonlimber(lmax=int(_CONFIG["lmax_nonlimber"]))
     if CLprobe is not None:
         ci.init_probes(possible_probes=CLprobe)
     ci.init_binning(int(ini.int("n_theta")),
@@ -1214,7 +1224,13 @@ def get_dv(param=None, AccuracyBoost=1.0):
                AccuracyBoost, 0, _CONFIG["non_linear_emul"],
                M=M, shear_photoz_bias=shear_photoz_bias,
                A1=A1, A2=A2, BTA=BTA)
-    return np.array(ci.compute_data_vector_masked(), dtype=np.float64)
+    # A stencil must not change its stopping multipole between points.
+    # Restore configured bases, not the accuracy-scaled getter values.
+    with nonlimber_derivative_mode(
+            interface=ci,
+            production_gg=_CONFIG["nonlimber_tolerance_gg"],
+            production_gs=_CONFIG["nonlimber_tolerance_gs"]):
+        return np.array(ci.compute_data_vector_masked(), dtype=np.float64)
 
 
 def get_dv_3x2pt(param=None, AccuracyBoost=1.0):
@@ -1259,7 +1275,13 @@ def get_dv_3x2pt(param=None, AccuracyBoost=1.0):
                A1=A1, A2=A2, BTA=BTA,
                lens_photoz_bias=lens_photoz_bias, B1=B1, B2=ZEROS5,
                B_MAG=BMAG_FID, B3nl=ZEROS5, BK=ZEROS5, PM=PM_FID)
-    return np.array(ci.compute_data_vector_masked(), dtype=np.float64)
+    # A stencil must not change its stopping multipole between points.
+    # Restore configured bases, not the accuracy-scaled getter values.
+    with nonlimber_derivative_mode(
+            interface=ci,
+            production_gg=_CONFIG["nonlimber_tolerance_gg"],
+            production_gs=_CONFIG["nonlimber_tolerance_gs"]):
+        return np.array(ci.compute_data_vector_masked(), dtype=np.float64)
 
 
 def get_ddv(index=0, h=0.02, CV=None, AccuracyBoost=1.0):

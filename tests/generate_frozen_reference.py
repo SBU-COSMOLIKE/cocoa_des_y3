@@ -27,7 +27,7 @@ import os
 
 # The references must be produced under the same OpenMP thread count
 # the tests enforce, and before any cobaya/cosmolike import.
-os.environ["OMP_NUM_THREADS"] = "4"
+os.environ["OMP_NUM_THREADS"] = os.environ.get("COCOA_TEST_OMP_THREADS", "4")
 
 import sys
 

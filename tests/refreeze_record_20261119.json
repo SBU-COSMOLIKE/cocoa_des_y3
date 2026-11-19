@@ -1,0 +1,819 @@
+{
+  "date": "2026-11-19",
+  "scope": "Cumulative numerical reference update with the DES non-Limber endpoint fixed at z=4. This is not an isolated endpoint-induced change.",
+  "previous_reference_project_commit": "cacc99bac6ba9ead210ba97c93a7fb17cade330c",
+  "previous_reference_core_commit": "a880d369ba8d4075dcc4875ae7eeb7bb07e708f1",
+  "previous_reference_generated_utc": "2026-09-30T13:17:00Z",
+  "current_endpoint_feature_core_commit": "f8a80548d3a0e26caa861cb6dec51022d8be03fb",
+  "current_project_commit_before_refreeze": "7e5f5e43c1c161f494b0bdbe3eac5a578c0d68fb",
+  "installed_binary_sha256": "ad18d75bfb0f78aebebcd37a8d831563f4ba6e9d4d994adbc9389d041ca7190b",
+  "source_identity_note": "The feature commit identifies the endpoint implementation; the installed binary hash identifies the exact tested executable. Subsequent unrelated core commits are not represented by a claim of a newer compiled binary.",
+  "omp_threads": 6,
+  "blas_threads": 1,
+  "frozen_physical_parameters_priors_and_points": "Preserved from the previous freeze; newer live-example prior changes were not adopted.",
+  "resolved_growth_convention": {
+    "growth_k_Mpc_inverse": 0.05,
+    "likelihood_change_commit": "9cdf0aed40a338a13dd615330619c4c7a2e2e80f",
+    "serialization_note": "The likelihood currently reads this inherited value with getattr rather than declaring it in the YAML. This record makes the accepted effective default explicit without changing that public input contract.",
+    "verification": "A static subclass exposing growth_k=0.05 reproduces all columns of all four regenerated NLA/TATT synthetic vectors exactly."
+  },
+  "endpoint_only_check": {
+    "old_endpoint": 4.0,
+    "new_endpoint": 4.0,
+    "comparisons": 13,
+    "changed_rows_in_any_block": 0,
+    "all_round_trips_exact": true
+  },
+  "historical_drift_interpretation": "Regenerated shear, galaxy-shear and clustering entries differ from the September references. Reinstating the previous growth_k=0.0005 convention does not recover those references. The growth convention is one measured contributor; the remaining cumulative drift has not been assigned to individual commits. Known intervening changes include lens quadrature/support, the Limber-switch tolerance, node growth rates and the FFT even-length repair. This record does not assert that those candidates exhaust or individually explain the observed residual.",
+  "serialized_vectors": [
+    {
+      "file": "baryon_baccoemu.modelvector",
+      "before_sha256": "79fed6fd963d68a18963da32a1ca9aa8cf4a3e50890393ac88c1170faa2f0254",
+      "after_sha256": "2a1ce49e4ada14cc99605d73f2b6d7c0fea74044173d9ec674e2bf563fa4e4ca",
+      "file_bytes_identical": false,
+      "old_shape": [
+        900,
+        2
+      ],
+      "new_shape": [
+        900,
+        2
+      ],
+      "changed_numeric_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_bit_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_serialized_tokens_per_column": [
+        0,
+        227
+      ],
+      "blocks": [
+        {
+          "block": "ss",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 227,
+          "changed_rows_any_bit_column": 227,
+          "max_absolute_change": 2.5474999999986403e-09
+        },
+        {
+          "block": "gs",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        },
+        {
+          "block": "gg",
+          "entries": 100,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        }
+      ],
+      "status": "classified"
+    },
+    {
+      "file": "baryon_bcemu.modelvector",
+      "before_sha256": "b9a0edca59f1bbf62ae07cc1567aa1b7c8e1274c0fdc43cf15fd84b59e21083e",
+      "after_sha256": "b6c75a0d4470e84654eea9e55312d6327588b848b55ae49bf636a34c5966f623",
+      "file_bytes_identical": false,
+      "old_shape": [
+        900,
+        2
+      ],
+      "new_shape": [
+        900,
+        2
+      ],
+      "changed_numeric_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_bit_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_serialized_tokens_per_column": [
+        0,
+        227
+      ],
+      "blocks": [
+        {
+          "block": "ss",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 227,
+          "changed_rows_any_bit_column": 227,
+          "max_absolute_change": 5.54909999999747e-09
+        },
+        {
+          "block": "gs",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        },
+        {
+          "block": "gg",
+          "entries": 100,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        }
+      ],
+      "status": "classified"
+    },
+    {
+      "file": "baryon_bcemu2025.modelvector",
+      "before_sha256": "d9949eb601e6a7d850a8e29f2a0e74e6f1c1c8f7f647c58e62adde028b03a498",
+      "after_sha256": "2d0f778c68c9e164f96ab9e8e3aa1bd0a6100940cc3912c4b5f6cc6061bfed12",
+      "file_bytes_identical": false,
+      "old_shape": [
+        900,
+        2
+      ],
+      "new_shape": [
+        900,
+        2
+      ],
+      "changed_numeric_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_bit_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_serialized_tokens_per_column": [
+        0,
+        227
+      ],
+      "blocks": [
+        {
+          "block": "ss",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 227,
+          "changed_rows_any_bit_column": 227,
+          "max_absolute_change": 5.093500000003274e-09
+        },
+        {
+          "block": "gs",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        },
+        {
+          "block": "gg",
+          "entries": 100,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        }
+      ],
+      "status": "classified"
+    },
+    {
+      "file": "baryon_flamingo.modelvector",
+      "before_sha256": "1c041fa7417c748af0d80bda4ed1c2fb191964849605c4e262ea2c0c025cc3cf",
+      "after_sha256": "5e29c1f4a794558e201b73e6f53bf2f21d6edebcd5dec865236fd707ba58365f",
+      "file_bytes_identical": false,
+      "old_shape": [
+        900,
+        2
+      ],
+      "new_shape": [
+        900,
+        2
+      ],
+      "changed_numeric_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_bit_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_serialized_tokens_per_column": [
+        0,
+        227
+      ],
+      "blocks": [
+        {
+          "block": "ss",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 227,
+          "changed_rows_any_bit_column": 227,
+          "max_absolute_change": 5.466399999998596e-09
+        },
+        {
+          "block": "gs",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        },
+        {
+          "block": "gg",
+          "entries": 100,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        }
+      ],
+      "status": "classified"
+    },
+    {
+      "file": "baryon_spk_akino.modelvector",
+      "before_sha256": "ad2e2f9b46263b1abda2df9639e1d25b3bf8549b6a3f12966bf0ce3028f701bc",
+      "after_sha256": "9dd0c40340477686d7093aa74916722ed9465789af5ee295c882da243998b871",
+      "file_bytes_identical": false,
+      "old_shape": [
+        900,
+        2
+      ],
+      "new_shape": [
+        900,
+        2
+      ],
+      "changed_numeric_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_bit_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_serialized_tokens_per_column": [
+        0,
+        227
+      ],
+      "blocks": [
+        {
+          "block": "ss",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 227,
+          "changed_rows_any_bit_column": 227,
+          "max_absolute_change": 5.652400000000766e-09
+        },
+        {
+          "block": "gs",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        },
+        {
+          "block": "gg",
+          "entries": 100,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        }
+      ],
+      "status": "classified"
+    },
+    {
+      "file": "baryon_spk_double_power_law.modelvector",
+      "before_sha256": "103fc91656538b421d689069448284fb5d4a995194ab691f45ce8bc44cda2ca9",
+      "after_sha256": "f16a30c16cc941d1be4ed1715e5f37935f6b7f3493aa2106ff6fa6e72559a825",
+      "file_bytes_identical": false,
+      "old_shape": [
+        900,
+        2
+      ],
+      "new_shape": [
+        900,
+        2
+      ],
+      "changed_numeric_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_bit_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_serialized_tokens_per_column": [
+        0,
+        227
+      ],
+      "blocks": [
+        {
+          "block": "ss",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 227,
+          "changed_rows_any_bit_column": 227,
+          "max_absolute_change": 5.651600000001252e-09
+        },
+        {
+          "block": "gs",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        },
+        {
+          "block": "gg",
+          "entries": 100,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        }
+      ],
+      "status": "classified"
+    },
+    {
+      "file": "baryon_spk_power_law.modelvector",
+      "before_sha256": "5fee830e41c67b067b4ae90b309c74c1c5714830c9c0fd8cdadb49f4c9b3a7d2",
+      "after_sha256": "5c36d813e4d697c8091de23f6e035fdacaf1f5b1df02e693e2590f0df08ab96d",
+      "file_bytes_identical": false,
+      "old_shape": [
+        900,
+        2
+      ],
+      "new_shape": [
+        900,
+        2
+      ],
+      "changed_numeric_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_bit_entries_per_column": [
+        0,
+        227
+      ],
+      "changed_serialized_tokens_per_column": [
+        0,
+        227
+      ],
+      "blocks": [
+        {
+          "block": "ss",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 227,
+          "changed_rows_any_bit_column": 227,
+          "max_absolute_change": 5.736300000005687e-09
+        },
+        {
+          "block": "gs",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        },
+        {
+          "block": "gg",
+          "entries": 100,
+          "changed_rows_any_numeric_column": 0,
+          "changed_rows_any_bit_column": 0,
+          "max_absolute_change": 0.0
+        }
+      ],
+      "status": "classified"
+    },
+    {
+      "file": "synthetic_des_y1.modelvector",
+      "before_sha256": "5eb03133d997af2b8c280683ce7898e2f5adb9ac39b6fe02f96c757468e8054a",
+      "after_sha256": "9fac52c90b743d98ecee6e2a84076b0c4e88cc8d91e8c34f5e7dc33fdbf7decd",
+      "file_bytes_identical": false,
+      "old_shape": [
+        900,
+        2
+      ],
+      "new_shape": [
+        900,
+        2
+      ],
+      "changed_numeric_entries_per_column": [
+        0,
+        457
+      ],
+      "changed_bit_entries_per_column": [
+        0,
+        457
+      ],
+      "changed_serialized_tokens_per_column": [
+        0,
+        457
+      ],
+      "blocks": [
+        {
+          "block": "ss",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 227,
+          "changed_rows_any_bit_column": 227,
+          "max_absolute_change": 1.3025200000001333e-08
+        },
+        {
+          "block": "gs",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 176,
+          "changed_rows_any_bit_column": 176,
+          "max_absolute_change": 1.5738639999999764e-07
+        },
+        {
+          "block": "gg",
+          "entries": 100,
+          "changed_rows_any_numeric_column": 54,
+          "changed_rows_any_bit_column": 54,
+          "max_absolute_change": 6.932199999999666e-05
+        }
+      ],
+      "status": "classified"
+    },
+    {
+      "file": "synthetic_des_y3.modelvector",
+      "before_sha256": "537458df278e45d157208fea9b4cc73769cf7e0558f5c7112ca9b670256b5210",
+      "after_sha256": "bafd80de48f79e6aa0b6352bdb70c6f7af9840c320aa29c97528846ef8cebbef",
+      "file_bytes_identical": false,
+      "old_shape": [
+        900,
+        2
+      ],
+      "new_shape": [
+        900,
+        2
+      ],
+      "changed_numeric_entries_per_column": [
+        0,
+        533
+      ],
+      "changed_bit_entries_per_column": [
+        0,
+        533
+      ],
+      "changed_serialized_tokens_per_column": [
+        0,
+        533
+      ],
+      "blocks": [
+        {
+          "block": "ss",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 227,
+          "changed_rows_any_bit_column": 227,
+          "max_absolute_change": 1.5298520000000228e-08
+        },
+        {
+          "block": "gs",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 252,
+          "changed_rows_any_bit_column": 252,
+          "max_absolute_change": 3.406882999999969e-07
+        },
+        {
+          "block": "gg",
+          "entries": 100,
+          "changed_rows_any_numeric_column": 54,
+          "changed_rows_any_bit_column": 54,
+          "max_absolute_change": 9.650429999999433e-05
+        }
+      ],
+      "status": "classified"
+    },
+    {
+      "file": "tatt_des_y1.modelvector",
+      "before_sha256": "d08526ed213ec6e7d02b73c2492ade3f158ada5249a72241f0e02d89c244329c",
+      "after_sha256": "f9d371f01f0338afe749f10aff64ccf086e66b3e7ed220f60c5a99c64edd89cf",
+      "file_bytes_identical": false,
+      "old_shape": [
+        900,
+        2
+      ],
+      "new_shape": [
+        900,
+        2
+      ],
+      "changed_numeric_entries_per_column": [
+        0,
+        457
+      ],
+      "changed_bit_entries_per_column": [
+        0,
+        457
+      ],
+      "changed_serialized_tokens_per_column": [
+        0,
+        457
+      ],
+      "blocks": [
+        {
+          "block": "ss",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 227,
+          "changed_rows_any_bit_column": 227,
+          "max_absolute_change": 1.0660500000000031e-08
+        },
+        {
+          "block": "gs",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 176,
+          "changed_rows_any_bit_column": 176,
+          "max_absolute_change": 1.3611089999999873e-07
+        },
+        {
+          "block": "gg",
+          "entries": 100,
+          "changed_rows_any_numeric_column": 54,
+          "changed_rows_any_bit_column": 54,
+          "max_absolute_change": 6.932199999999666e-05
+        }
+      ],
+      "status": "classified"
+    },
+    {
+      "file": "tatt_des_y3.modelvector",
+      "before_sha256": "314a80875e6b30e7d58ddc093560ca187ba7982d9030019f193beb0ef29eb034",
+      "after_sha256": "131de9f9eb57f4452b0249b68db8d88c7a0de15f0402b261e1da1e72e83c3410",
+      "file_bytes_identical": false,
+      "old_shape": [
+        900,
+        2
+      ],
+      "new_shape": [
+        900,
+        2
+      ],
+      "changed_numeric_entries_per_column": [
+        0,
+        533
+      ],
+      "changed_bit_entries_per_column": [
+        0,
+        533
+      ],
+      "changed_serialized_tokens_per_column": [
+        0,
+        533
+      ],
+      "blocks": [
+        {
+          "block": "ss",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 227,
+          "changed_rows_any_bit_column": 227,
+          "max_absolute_change": 1.2060829999999004e-08
+        },
+        {
+          "block": "gs",
+          "entries": 400,
+          "changed_rows_any_numeric_column": 252,
+          "changed_rows_any_bit_column": 252,
+          "max_absolute_change": 3.4922859999999954e-07
+        },
+        {
+          "block": "gg",
+          "entries": 100,
+          "changed_rows_any_numeric_column": 54,
+          "changed_rows_any_bit_column": 54,
+          "max_absolute_change": 9.650429999999433e-05
+        }
+      ],
+      "status": "classified"
+    }
+  ],
+  "growth_comparison": {
+    "synthetic_des_y1": [
+      {
+        "growth_k_Mpc_inverse": 0.05,
+        "blocks": [
+          {
+            "block": "ss",
+            "different_from_original": 227,
+            "different_from_refrozen": 0,
+            "max_absolute_vs_original": 1.3025200000001333e-08
+          },
+          {
+            "block": "gs",
+            "different_from_original": 176,
+            "different_from_refrozen": 0,
+            "max_absolute_vs_original": 1.5738639999999764e-07
+          },
+          {
+            "block": "gg",
+            "different_from_original": 54,
+            "different_from_refrozen": 0,
+            "max_absolute_vs_original": 6.932199999999666e-05
+          }
+        ]
+      },
+      {
+        "growth_k_Mpc_inverse": 0.0005,
+        "blocks": [
+          {
+            "block": "ss",
+            "different_from_original": 227,
+            "different_from_refrozen": 227,
+            "max_absolute_vs_original": 1.2410499999998786e-08
+          },
+          {
+            "block": "gs",
+            "different_from_original": 176,
+            "different_from_refrozen": 176,
+            "max_absolute_vs_original": 6.984900000002502e-08
+          },
+          {
+            "block": "gg",
+            "different_from_original": 54,
+            "different_from_refrozen": 54,
+            "max_absolute_vs_original": 8.65585999999946e-05
+          }
+        ]
+      }
+    ],
+    "synthetic_des_y3": [
+      {
+        "growth_k_Mpc_inverse": 0.05,
+        "blocks": [
+          {
+            "block": "ss",
+            "different_from_original": 227,
+            "different_from_refrozen": 0,
+            "max_absolute_vs_original": 1.5298520000000228e-08
+          },
+          {
+            "block": "gs",
+            "different_from_original": 252,
+            "different_from_refrozen": 0,
+            "max_absolute_vs_original": 3.406882999999969e-07
+          },
+          {
+            "block": "gg",
+            "different_from_original": 54,
+            "different_from_refrozen": 0,
+            "max_absolute_vs_original": 9.650429999999433e-05
+          }
+        ]
+      },
+      {
+        "growth_k_Mpc_inverse": 0.0005,
+        "blocks": [
+          {
+            "block": "ss",
+            "different_from_original": 227,
+            "different_from_refrozen": 227,
+            "max_absolute_vs_original": 5.175599999999124e-09
+          },
+          {
+            "block": "gs",
+            "different_from_original": 252,
+            "different_from_refrozen": 252,
+            "max_absolute_vs_original": 3.6064899999998503e-07
+          },
+          {
+            "block": "gg",
+            "different_from_original": 54,
+            "different_from_refrozen": 54,
+            "max_absolute_vs_original": 0.00011119199999999607
+          }
+        ]
+      }
+    ],
+    "tatt_des_y1": [
+      {
+        "growth_k_Mpc_inverse": 0.05,
+        "blocks": [
+          {
+            "block": "ss",
+            "different_from_original": 227,
+            "different_from_refrozen": 0,
+            "max_absolute_vs_original": 1.0660500000000031e-08
+          },
+          {
+            "block": "gs",
+            "different_from_original": 176,
+            "different_from_refrozen": 0,
+            "max_absolute_vs_original": 1.3611089999999873e-07
+          },
+          {
+            "block": "gg",
+            "different_from_original": 54,
+            "different_from_refrozen": 0,
+            "max_absolute_vs_original": 6.932199999999666e-05
+          }
+        ]
+      },
+      {
+        "growth_k_Mpc_inverse": 0.0005,
+        "blocks": [
+          {
+            "block": "ss",
+            "different_from_original": 227,
+            "different_from_refrozen": 227,
+            "max_absolute_vs_original": 1.2410500000005562e-08
+          },
+          {
+            "block": "gs",
+            "different_from_original": 176,
+            "different_from_refrozen": 176,
+            "max_absolute_vs_original": 6.984899999999791e-08
+          },
+          {
+            "block": "gg",
+            "different_from_original": 54,
+            "different_from_refrozen": 54,
+            "max_absolute_vs_original": 8.65585999999946e-05
+          }
+        ]
+      }
+    ],
+    "tatt_des_y3": [
+      {
+        "growth_k_Mpc_inverse": 0.05,
+        "blocks": [
+          {
+            "block": "ss",
+            "different_from_original": 227,
+            "different_from_refrozen": 0,
+            "max_absolute_vs_original": 1.2060829999999004e-08
+          },
+          {
+            "block": "gs",
+            "different_from_original": 252,
+            "different_from_refrozen": 0,
+            "max_absolute_vs_original": 3.4922859999999954e-07
+          },
+          {
+            "block": "gg",
+            "different_from_original": 54,
+            "different_from_refrozen": 0,
+            "max_absolute_vs_original": 9.650429999999433e-05
+          }
+        ]
+      },
+      {
+        "growth_k_Mpc_inverse": 0.0005,
+        "blocks": [
+          {
+            "block": "ss",
+            "different_from_original": 227,
+            "different_from_refrozen": 227,
+            "max_absolute_vs_original": 5.175500000000879e-09
+          },
+          {
+            "block": "gs",
+            "different_from_original": 252,
+            "different_from_refrozen": 252,
+            "max_absolute_vs_original": 3.689140000000008e-07
+          },
+          {
+            "block": "gg",
+            "different_from_original": 54,
+            "different_from_refrozen": 54,
+            "max_absolute_vs_original": 0.00011119199999999607
+          }
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "quick_tests_passed": 108,
+    "quick_tests_failed": 0,
+    "configuration_audit_passed": true,
+    "constants_remeasured": true,
+    "new_reference_manifest_sha256": "87ef608081212c143cf9d7466a16af129d4a97a5605d9ed00b7d565d99629325"
+  },
+  "reference_chi2_before": {
+    "_meta": {
+      "chi2_tolerance": 0.2,
+      "generated_utc": "2026-09-30T13:17:00Z",
+      "omp_num_threads": "4"
+    },
+    "example1_nla": 0.00010302880692017887,
+    "example1_tatt": 0.00010801950572126963,
+    "example2_2x2pt_nla": 1.9025494258254306e-13,
+    "example2_2x2pt_tatt": 1.8678822329332017e-13,
+    "example2_nla": 2.0420347872014743e-13,
+    "example2_tatt": 2.0674857818737539e-13,
+    "example3_nla": 4.325478236976448e-15,
+    "example3_tatt": 3.776296182044294e-15,
+    "example4_2x2pt_nla": 5.6535816086686966e-14,
+    "example4_2x2pt_tatt": 5.465671059685659e-14,
+    "example4_nla": 6.211228343466102e-14,
+    "example4_tatt": 5.98070846339206e-14
+  },
+  "reference_chi2_after": {
+    "_meta": {
+      "chi2_tolerance": 0.2,
+      "generated_utc": "2026-11-19T05:29:06Z",
+      "omp_num_threads": "6"
+    },
+    "example1_nla": 0.00010206059160204452,
+    "example1_tatt": 0.00010708701307673367,
+    "example2_2x2pt_nla": 1.3160478595614918e-13,
+    "example2_2x2pt_tatt": 1.2957149248086349e-13,
+    "example2_nla": 1.4657009938034293e-13,
+    "example2_tatt": 1.4653491511761127e-13,
+    "example3_nla": 4.10370074646147e-15,
+    "example3_tatt": 3.3934272639805737e-15,
+    "example4_2x2pt_nla": 6.872485829399718e-14,
+    "example4_2x2pt_tatt": 6.621166642582888e-14,
+    "example4_nla": 7.532086261162813e-14,
+    "example4_tatt": 7.053635666904065e-14
+  }
+}

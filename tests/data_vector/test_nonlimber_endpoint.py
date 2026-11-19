@@ -17,7 +17,7 @@ import sys
 import unittest
 
 # Set the thread limit before loading any compiled scientific library.
-os.environ["OMP_NUM_THREADS"] = "4"
+os.environ["OMP_NUM_THREADS"] = os.environ.get("COCOA_TEST_OMP_THREADS", "4")
 os.environ["OPENBLAS_NUM_THREADS"] = "1"
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import cocoa_test_utils as u

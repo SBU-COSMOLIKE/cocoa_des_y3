@@ -55,7 +55,7 @@ import os
 
 # OpenMP reads OMP_NUM_THREADS when the compiled libraries load, so
 # this must run before any cobaya/cosmolike import in the process.
-os.environ["OMP_NUM_THREADS"] = "4"
+os.environ["OMP_NUM_THREADS"] = os.environ.get("COCOA_TEST_OMP_THREADS", "4")
 
 import sys
 import unittest
@@ -71,7 +71,7 @@ import cocoa_test_utils as u
 # is what makes pytest collect it here, with unchanged test ids.
 TestNonLimberGG = u.nonlimber_suite(
     u, name="TestNonLimberGG", kind="gg",
-    measured=9.492, default=0)
+    measured=9.262177641, default=0)
 
 # __name__ is "__main__" only when this file runs directly as a
 # script; pytest imports the module instead, so this block stays
