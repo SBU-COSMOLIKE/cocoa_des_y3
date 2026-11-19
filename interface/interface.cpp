@@ -143,6 +143,18 @@ PYBIND11_MODULE(cosmolike_des_y3_interface, m)
       (py::arg("nonlimber_boost") = 1.0).none(false)
     );
 
+  m.def("init_nonlimber_zmax",
+      &cosmolike_interface::init_nonlimber_zmax,
+      "Upper redshift of the galaxy and cluster non-Limber FFTLog grids; "
+      "finite and >= 4.0. Changes invalidate the cached projections.",
+      (py::arg("zmax") = 4.0).none(false)
+    );
+
+  m.def("get_nonlimber_zmax",
+      &cosmolike_interface::get_nonlimber_zmax,
+      "Configured upper redshift of the non-Limber FFTLog grids"
+    );
+
   m.def("init_adopt_limber_gs",
       &cosmolike_interface::init_adopt_limber_gs,
       "Galaxy-galaxy lensing: 1 = Limber at every multipole (default), "

@@ -168,6 +168,8 @@ PM_FID = [DES_PM_1, DES_PM_2, DES_PM_3, DES_PM_4, DES_PM_5]
 # same way it does in the other projects. _CONFIG is module-global state:
 # configure() changes it, and every later wrapper call reads it.
 _CONFIG = {
+    # Upper redshift, independent of sampling; matches this project YAML.
+    "nonlimber_zmax": 4.0,
     "lmax": 50000,              # base of the internal C_ell tables
     "ntheta": 20,               # angular bins of the real-space vector
     "theta_min_arcmin": 2.5,
@@ -222,6 +224,11 @@ def configure(**overrides):
     almost always a typo, so it raises instead of being stored
     silently.
 
+    The endpoint can also change after initialization. Updating the compiled
+    setting here makes the next prediction rebuild the affected projections,
+    including helpers that prepare CAMB directly instead of using _set_state.
+    It must be finite and at least 4.0; invalid values leave _CONFIG intact.
+
     Arguments:
       overrides = keyword form of any _CONFIG entry, e.g.
                   configure(lmax=70000).
@@ -233,6 +240,12 @@ def configure(**overrides):
       KeyError naming the unknown keyword and the valid names;
       ValueError when photoz_histogram_akima is not 0 or 1.
     """
+    if "nonlimber_zmax" in overrides:
+        endpoint = float(overrides["nonlimber_zmax"])
+        if not np.isfinite(endpoint) or endpoint < 4.0:
+            raise ValueError(
+                f"nonlimber_zmax = {endpoint}; choose a finite value >= 4.0")
+
     if overrides.get("photoz_histogram_akima", 0) not in (0, 1):
         raise ValueError("photoz_histogram_akima must be 0 or 1")
 
@@ -242,6 +255,8 @@ def configure(**overrides):
                 f"configure() got unknown option '{name}'; valid options: "
                 + ", ".join(sorted(_CONFIG)))
         _CONFIG[name] = value
+    if "nonlimber_zmax" in overrides:
+        ci.init_nonlimber_zmax(zmax=endpoint)
 
 
 def init_cosmolike(CLprobe=None, with_data=False, lmax=None):
@@ -282,6 +297,7 @@ def init_cosmolike(CLprobe=None, with_data=False, lmax=None):
         os.path.join(_CONFIG["path"], _CONFIG["data_file"])))
     allsims = ini.relativeFileName('all_sims_hdf5_file')
     ci.initial_setup()
+    ci.init_nonlimber_zmax(zmax=float(_CONFIG["nonlimber_zmax"]))
     if CLprobe is not None:
         ci.init_probes(possible_probes=CLprobe)
     ci.init_binning(int(ini.int("n_theta")),
@@ -390,6 +406,7 @@ def _set_state(omegam, omegab, H0, ns, As_1e9, w, w0pwa,
     Returns:
       nothing; the interface state is the result.
     """
+    ci.init_nonlimber_zmax(zmax=float(_CONFIG["nonlimber_zmax"]))
     (log10k_interp_2D, z_interp_2D, lnPL, lnPNL,
      G_growth, z_growth, z_interp_1D, chi,
      omegan2, lnPL_cb) = cnu.get_camb_cosmology(
