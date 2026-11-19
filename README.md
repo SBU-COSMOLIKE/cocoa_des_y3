@@ -515,9 +515,9 @@ The minimum JSON must come from the same evaluate YAML and parameter order.
 Older plain-text minimum files are not accepted. Set any additional priors
 in the input YAML; these scripts do not insert hidden cosmological priors.
 
-Nautilus writes weighted GetDist-compatible rows and a JSON convergence
+Nautilus writes weighted GetDist-compatible rows and a YAML convergence
 record. Reaching `--maxfeval` is not convergence. If the budget ends before
-any posterior samples are retained, only the checkpoint and a JSON record
+any posterior samples are retained, only the checkpoint and a YAML record
 with `converged: false` are saved. Its prior transform uses
 Cobaya's one-dimensional prior distributions; external prior factors enter
 once as additional log weight. Evidence with unnormalized external priors
