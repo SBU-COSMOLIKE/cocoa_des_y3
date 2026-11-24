@@ -1,4 +1,4 @@
-"""Compare the candidate matter emulator with CAMB at random project cosmologies.
+"""Compare the candidate matter emulator with CAMB at random des_y3 cosmologies.
 
 Run from activated Cocoa:
     python projects/des_y3/tests/compare_emulator_camb.py
@@ -6,12 +6,18 @@ Run from activated Cocoa:
 The shared Cocoa test uses the numbered example's cosmological priors,
 restricted to 0.2 < Omega_m < 0.5 and fixed mnu=0.06 eV. Nuisance parameters
 stay at its declared point. Both calculations use plain mead2020 and CAMB
-background distances. This does not change the production nonlinear prescription
-or its sampled neutrino-mass prior.
+background distances. This does not change the production nonlinear
+prescription or its sampled neutrino-mass prior.
 
 Use EMULATOR_CODE_DIR and EMULATOR_DATA_DIR to select candidate checkouts.
 COCOA_TEST_INTERFACE_DIR optionally selects an independently built native
 interface. Results, including failed points, go under chains/.
+
+The optional --points argument reads explicit named-column parameter points.
+The default Fisher calculation varies the sampled cosmological and nuisance
+parameters for this project's full retained observable. --local-points adds
+an independently specified local sample to the plot. The E5 official test
+runs the driver with --advisory, retaining all accuracy outcomes.
 """
 
 import argparse
@@ -37,7 +43,11 @@ sys.path.insert(0, str(interface))
 sys.path.insert(0, str(root / "cobaya"))
 
 import cosmolike_des_y3_interface as ci
-from cocoa_testing import run_matter_emulator_prior_check
+from cocoa_testing import (
+    run_matter_emulator_prior_check,
+    plot_matter_emulator_fisher,
+    sample_matter_emulator_fisher,
+)
 
 
 if __name__ == "__main__":
@@ -46,9 +56,45 @@ if __name__ == "__main__":
     parser.add_argument("--models", type=int, default=50)
     parser.add_argument("--seed", type=int, default=137)
     parser.add_argument("--limit", type=float, default=1.0)
+    parser.add_argument("--points", type=Path, help="Named-column parameter table instead of random draws")
+    parser.add_argument("--no-fisher", action="store_true",
+                        help="Skip the derivative and contour stage")
+    parser.add_argument("--output", type=Path,
+                        help="New result directory below project chains/")
+    parser.add_argument("--plot-only", type=Path,
+                        help="Redraw a completed comparison directory")
+    parser.add_argument("--fisher-sample-power", type=int, default=18,
+                        help="log2 bounded-Fisher proposals per repetition")
+    parser.add_argument("--resample-fisher", action="store_true",
+                        help="With --plot-only, repeat bounded sampling")
+    parser.add_argument("--advisory", action="store_true",
+                        help="Report error sizes; fail only incomplete calculations")
+    parser.add_argument("--local-points", type=Path,
+                        default=None,
+                        help="Local comparison points overlaid when Fisher is enabled")
     args = parser.parse_args()
     if args.models < 1 or args.limit <= 0:
         parser.error("models and limit must be positive")
+    points_file = args.points.resolve() if args.points is not None else None
+    if args.plot_only is not None:
+        output = args.plot_only.resolve()
+        if args.resample_fisher:
+            sample_matter_emulator_fisher(
+                output=output / "fisher",
+                sample_power=args.fisher_sample_power,
+            )
+        local = output / "local"
+        plot_matter_emulator_fisher(
+            output=output / "fisher",
+            points_file=output / "points.txt",
+            distances_file=output / "distances.txt",
+            project_name=project.name,
+            local_points_file=local / "points.txt" if local.is_dir() else None,
+            local_distances_file=local / "distances.txt" if local.is_dir() else None,
+        )
+        sys.exit(0)
+    output_dir = args.output.resolve() if args.output is not None else None
+    local_points = args.local_points.resolve() if args.local_points is not None else None
     os.chdir(root)
     failed = run_matter_emulator_prior_check(
         project=project,
@@ -57,5 +103,34 @@ if __name__ == "__main__":
         n_models=args.models,
         seed=args.seed,
         limit=args.limit,
+        fisher=not args.no_fisher,
+        output_dir=output_dir,
+        fisher_sample_power=args.fisher_sample_power,
+        points_file=points_file,
+        advisory=args.advisory,
     )
+    # Recompute local points with the same provider and likelihood routes.
+    # Their predictions have their own source/parameter records under local/.
+    if not args.no_fisher and points_file is None and local_points is not None:
+        output = output_dir
+        if output is None:
+            output = (project / "chains/matter_emulator_prior"
+                      / Path(args.configuration).stem / "with_fisher")
+        failed += run_matter_emulator_prior_check(
+            project=project,
+            configuration=args.configuration,
+            get_precision=ci.get_inv_cov_masked,
+            points_file=local_points,
+            output_dir=output / "local",
+            limit=args.limit,
+            advisory=args.advisory,
+        )
+        plot_matter_emulator_fisher(
+            output=output / "fisher",
+            points_file=output / "points.txt",
+            distances_file=output / "distances.txt",
+            project_name=project.name,
+            local_points_file=output / "local/points.txt",
+            local_distances_file=output / "local/distances.txt",
+        )
     sys.exit(1 if failed else 0)

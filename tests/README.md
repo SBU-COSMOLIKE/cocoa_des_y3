@@ -161,3 +161,54 @@ best of the same prior draws, with every nuisance parameter fixed. This
 can show that large emulator differences occur away from the better fits
 on this slice. It is not a profile-likelihood or marginalized-posterior
 exclusion test, and the prior draws are not posterior samples.
+
+### Official hybrid-emulator test and Fisher figure
+
+The E5 test includes the approved accuracy figure whenever the hybrid
+emulator code and networks are installed. No separate plotting flag is
+needed. `EMULATOR_CODE_DIR` and `EMULATOR_DATA_DIR` can select candidate
+checkouts. This is a long numerical test: it evaluates 50 prior cosmologies
+through CAMB and the emulator, and computes Fisher derivatives at two step
+sizes. It keeps BLAS at one thread.
+
+```bash
+python -m pytest projects/des_y3/tests/data_vector/test_emul2.py -k test_e5_hybrid_emulator_fisher
+```
+
+Each invocation saves vectors, parameters, provenance, diagnostics and the
+PNG/PDF figure in a new directory below `chains/hybrid_emulator_tests/`.
+The colors show the direct prediction error
+`E = (emulator - CAMB).T @ precision @ (emulator - CAMB)` at thresholds
+0.2, 0.5 and 1. Circles are prior draws. The title identifies the project;
+the amplitude axis stops at 3.5, or at a tighter project bound. This cap does not establish accuracy throughout the box.
+
+The Fisher calculation uses the selected example's fiducial, sampled
+cosmological and nuisance parameters, and full retained data vector. These
+are project-specific forecasts, not a copy of the DES Y6 shear contour.
+An optional `--local-points` named-column table adds a separate local
+comparison, plotted as diamonds after it is recomputed.
+
+The Fisher calculation includes Gaussian prior curvature and applies hard
+bounds before marginalizing the plotted pairs. Solid/dashed contours enclose
+68/95 percent of this centered local approximation; they are not measured
+posterior contours. Insufficient bounded-sample convergence fails the test.
+Known inactive columns remain proper bounded directions without artificial
+information from rounding identical predictions.
+
+Large prediction errors and individual nonfinite emulator predictions are
+reported as advisory results. Missing CAMB references, no valid comparisons,
+or an incomplete Fisher/plot calculation fail the test. Frozen regression
+references and production theory choices are not changed.
+
+To redraw a completed run, set `EMULATOR_COMPARISON_DIR` to its directory:
+
+```bash
+python projects/des_y3/tests/compare_emulator_camb.py --plot-only "$EMULATOR_COMPARISON_DIR"
+```
+
+Add `--resample-fisher --fisher-sample-power 20` to repeat only the bounded
+integration with more samples. `--no-fisher` is available in the standalone
+driver for a prediction-only diagnostic; E5 does not use it. The driver
+supports `--models`, `--seed`, `--points` and `--output` for explicit studies.
+Its `--advisory` flag is used by E5; without it, accuracy exceedances also
+produce a nonzero exit code.
