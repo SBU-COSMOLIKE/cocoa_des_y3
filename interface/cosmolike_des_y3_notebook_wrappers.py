@@ -1195,9 +1195,12 @@ def get_dv(param=None, AccuracyBoost=1.0):
     Arguments:
       param = 1D float array in the FISHER_PARAM_NAMES layout, or
               None for the fiducial vector.
-      AccuracyBoost = the overall boost, passed to _set_state both as
-              AccuracyBoost and as CLAccuracyBoost, so the cosmolike
-              boost there is AccuracyBoost squared.
+      AccuracyBoost = overall multiplier applied once to CosmoLike and
+              its input-table sampling; CLAccuracyBoost stays 1.0.
+              CAMB receives 1 + (AccuracyBoost - 1)/3. Native integration
+              accuracy is int(abs(3*(AccuracyBoost - 1))), and the
+              multipole-table cap is _CONFIG["lmax"] +
+              20000*(AccuracyBoost - 1).
 
     Returns:
       1D float64 array: the masked data vector (masked entries 0).
@@ -1216,12 +1219,12 @@ def get_dv(param=None, AccuracyBoost=1.0):
     # positional arguments of _set_state: omegam, omegab, H0, ns, As_1e9
     # (param[4] down to param[0]), w = w0 and w0pwa = w0 + wa,
     # AccuracyBoost, kmax = 5.0 [1/Mpc], k_per_logint = 10,
-    # CAMBAccuracyBoost = 1, CLAccuracyBoost = AccuracyBoost,
+    # CAMBAccuracyBoost = 1, CLAccuracyBoost = 1,
     # CLIntegrationAccuracy = 0 and the configured non_linear_emul
     _set_state(param[4], param[3], param[2], param[1], param[0],
                param[5], param[5] + param[6],
                AccuracyBoost, 5.0, 10, 1.0,
-               AccuracyBoost, 0, _CONFIG["non_linear_emul"],
+               1.0, 0, _CONFIG["non_linear_emul"],
                M=M, shear_photoz_bias=shear_photoz_bias,
                A1=A1, A2=A2, BTA=BTA)
     # A stencil must not change its stopping multipole between points.
@@ -1246,7 +1249,8 @@ def get_dv_3x2pt(param=None, AccuracyBoost=1.0):
     Arguments:
       param = 1D float array in the FISHER_3X2PT_PARAM_NAMES layout, or
               None for the fiducial vector.
-      AccuracyBoost = as in get_dv (the cosmolike boost is its square).
+      AccuracyBoost = the same once-applied sampling multiplier and
+              derived CAMB/integration/cap settings as get_dv.
 
     Returns:
       1D float64 array: the masked data vector (masked entries 0).
@@ -1270,7 +1274,7 @@ def get_dv_3x2pt(param=None, AccuracyBoost=1.0):
     _set_state(param[4], param[3], param[2], param[1], param[0],
                param[5], param[5] + param[6],
                AccuracyBoost, 5.0, 10, 1.0,
-               AccuracyBoost, 0, _CONFIG["non_linear_emul"],
+               1.0, 0, _CONFIG["non_linear_emul"],
                M=M, shear_photoz_bias=shear_photoz_bias,
                A1=A1, A2=A2, BTA=BTA,
                lens_photoz_bias=lens_photoz_bias, B1=B1, B2=ZEROS5,
@@ -1336,7 +1340,7 @@ def get_Fisher(CV=None, h=0.02, AccuracyBoost=3.1, ddv=None,
       CV    = fiducial vector, or None for FISHER_PARAM_FID.
       h     = relative step of the derivatives.
       AccuracyBoost = forwarded to every data-vector evaluation (see
-              get_dv: the cosmolike boost becomes its square).
+              get_dv: the CosmoLike sampling multiplier is applied once).
       ddv   = derivative function, or None for get_ddv.
       priors = {index: (mean, sigma)}, or None for
               FISHER_GAUSSIAN_PRIORS.
