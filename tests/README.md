@@ -183,8 +183,9 @@ Each invocation saves vectors, parameters, provenance, diagnostics and the
 PNG/PDF figure in a new directory below `chains/hybrid_emulator_tests/`.
 The colors show the direct prediction error
 `E = (emulator - CAMB).T @ precision @ (emulator - CAMB)` at thresholds
-0.2, 0.5, 1 and 4; failed calculations have a separate marker. Circles are
-prior draws and diamonds are the focused points. The title identifies the project;
+0.2, 0.5, 1 and 4. Each error interval has its own marker shape; open
+markers are prior draws and filled markers are focused points. Failed
+calculations use an x marker. The title identifies the project;
 the amplitude axis stops at 3.5, or at a tighter project bound. This cap does not establish accuracy throughout the box.
 
 The Fisher calculation uses `EXAMPLE_EVALUATE1.yaml` by default: its
