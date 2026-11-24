@@ -20,7 +20,7 @@ params:
   As_1e9:
     prior:
       min: 0.5
-      max: 3.75
+      max: 3.5
     ref:
       dist: norm
       loc: 2.1
