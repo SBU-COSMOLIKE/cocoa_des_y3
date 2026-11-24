@@ -200,8 +200,11 @@ The Fisher calculation includes Gaussian prior curvature and applies hard
 bounds before marginalizing the plotted pairs. Solid/dashed contours enclose
 68/95 percent of this centered local approximation; they are not measured
 posterior contours. Insufficient bounded-sample convergence fails the test.
-Known inactive columns remain proper bounded directions without artificial
-information from rounding identical predictions.
+For ordinary NLA, the globally unused A2 amplitude, A2 redshift slope and
+BTA parameters have independent priors that integrate out exactly. They
+remain in the Cobaya input point but do not need Fisher derivatives.
+Other columns with zero response only at the fiducial remain bounded
+directions, without artificial information from rounding identical predictions.
 
 Large prediction errors and individual nonfinite emulator predictions are
 reported as advisory results. Missing CAMB references, no valid comparisons,
