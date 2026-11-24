@@ -1,7 +1,8 @@
 """E5: hybrid matter-emulator comparison and bounded Fisher accuracy plot.
 
 Run from activated Cocoa with python -m pytest and this file's path.
-The study compares fifty prior cosmologies with CAMB, with fixed neutrino
+The study compares fifty prior cosmologies and twenty-five focused Fisher
+points with CAMB, using EXAMPLE_EVALUATE1 and fixed neutrino
 mass and matched nonlinear prescriptions as documented by the comparison
 CLI. Every invocation retains its vectors, diagnostics and figure under
 chains/hybrid_emulator_tests/. It uses current example priors and does not
@@ -26,7 +27,7 @@ class TestHybridEmulator(unittest.TestCase):
     """
 
     def test_e5_hybrid_emulator_fisher(self):
-        """Compare fifty cosmologies and save the bounded Fisher overlay."""
+        """Compare prior and focused points and save their bounded Fisher overlay."""
         from datetime import datetime, timezone
         from pathlib import Path
         import subprocess

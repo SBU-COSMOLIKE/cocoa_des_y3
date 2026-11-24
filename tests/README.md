@@ -91,15 +91,17 @@ python ./projects/des_y3/EXAMPLE_EMUL2_MINIMIZE2.py --check
 
 [compare_emulator_camb.py](compare_emulator_camb.py) compares the candidate
 matter-power emulator with CAMB through this project's existing likelihood.
-It uses `EXAMPLE_EVALUATE2.yaml`, draws 50 cosmologies from its cosmological box priors,
+It uses `EXAMPLE_EVALUATE1.yaml`, draws 50 cosmologies from its cosmological box priors,
 restricts $`0.2 < \Omega_m < 0.5`$, and fixes $`\sum m_\nu=0.06`$ eV.
-Nuisance parameters stay at the example's declared evaluation point. Both
+For the broad-prior sample, nuisance parameters stay at the example's
+declared evaluation point. Both
 calculations use plain `mead2020` and CAMB background distances. The original
 example and its production physics are not modified.
 
-Select candidate code and trained-model checkouts before the run. The new
-nonlinear files must exist under the data checkout's `emulmps/w0wa_mead2020/`.
-Each command runs from activated Cocoa.
+The installed emulator code and trained models are used by default. For
+separate candidate checkouts, use the following commands from activated
+Cocoa. The nonlinear files must exist under `emulmps/w0wa_mead2020/`
+in the selected data checkout.
 
 **Step :one:**: select the candidate code checkout.
 
@@ -147,15 +149,16 @@ with status 1 if any point fails that criterion or cannot be evaluated.
 Failed points are retained, never replaced by easier draws; broad-prior
 points can lie outside the networks' coordinate ranges.
 
-Results are written to `chains/matter_emulator_prior/EXAMPLE_EVALUATE2/`:
+Results are written to `chains/matter_emulator_prior/EXAMPLE_EVALUATE1/with_fisher/`:
 `points.txt`, the two prediction arrays, `precision.npy`, `status.txt`,
 `distances.txt`, `likelihood_relevance.txt`, and `summary.txt`. The source
-YAML and revision record identify the inputs. Rerunning the same command recomputes the sample and
+YAML and revision record identify the inputs. The prediction-only
+`--no-fisher` mode omits the `with_fisher/` subfolder. Rerunning the same command recomputes the sample and
 replaces these generated results. Agreement at these points is useful for
 an importance-sampling proposal, but does not establish adequate overlap
 or effective sample size for an actual posterior chain.
 
-The example uses observed DES Y3 data.
+The default example uses observed DES Y3 cosmic-shear data.
 The likelihood-relevance table gives each CAMB fit penalty relative to the
 best of the same prior draws, with every nuisance parameter fixed. This
 can show that large emulator differences occur away from the better fits
@@ -168,8 +171,9 @@ The E5 test includes the approved accuracy figure whenever the hybrid
 emulator code and networks are installed. No separate plotting flag is
 needed. `EMULATOR_CODE_DIR` and `EMULATOR_DATA_DIR` can select candidate
 checkouts. This is a long numerical test: it evaluates 50 prior cosmologies
-through CAMB and the emulator, and computes Fisher derivatives at two step
-sizes. It keeps BLAS at one thread.
+through CAMB and the emulator, computes Fisher derivatives at two step
+sizes, then evaluates 25 focused points selected from that bounded Fisher
+distribution. It keeps BLAS at one thread.
 
 ```bash
 python -m pytest projects/des_y3/tests/data_vector/test_emul2.py -k test_e5_hybrid_emulator_fisher
@@ -179,14 +183,17 @@ Each invocation saves vectors, parameters, provenance, diagnostics and the
 PNG/PDF figure in a new directory below `chains/hybrid_emulator_tests/`.
 The colors show the direct prediction error
 `E = (emulator - CAMB).T @ precision @ (emulator - CAMB)` at thresholds
-0.2, 0.5 and 1. Circles are prior draws. The title identifies the project;
+0.2, 0.5, 1 and 4; failed calculations have a separate marker. Circles are
+prior draws and diamonds are the focused points. The title identifies the project;
 the amplitude axis stops at 3.5, or at a tighter project bound. This cap does not establish accuracy throughout the box.
 
-The Fisher calculation uses the selected example's fiducial, sampled
-cosmological and nuisance parameters, and full retained data vector. These
-are project-specific forecasts, not a copy of the DES Y6 shear contour.
-An optional `--local-points` named-column table adds a separate local
-comparison, plotted as diamonds after it is recomputed.
+The Fisher calculation uses `EXAMPLE_EVALUATE1.yaml` by default: its
+fiducial, probe, sampled cosmological and nuisance parameters, and full
+retained data vector. The focused selection follows this project's bounded
+Fisher distribution and varies the differentiated nuisance parameters too.
+It does not use emulator errors to select easier points. A supplied
+`--local-points` named-column table replaces the automatic selection; E5
+requires no such file. Both samples appear in the same accuracy figure.
 
 The Fisher calculation includes Gaussian prior curvature and applies hard
 bounds before marginalizing the plotted pairs. Solid/dashed contours enclose
