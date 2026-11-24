@@ -52,7 +52,7 @@ from cocoa_testing import (
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--configuration", default="EXAMPLE_EVALUATE2.yaml")
+    parser.add_argument("--configuration", default="EXAMPLE_EVALUATE1.yaml")
     parser.add_argument("--models", type=int, default=50)
     parser.add_argument("--seed", type=int, default=137)
     parser.add_argument("--limit", type=float, default=1.0)
