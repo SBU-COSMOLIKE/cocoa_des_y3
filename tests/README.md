@@ -149,8 +149,15 @@ points can lie outside the networks' coordinate ranges.
 
 Results are written to `chains/matter_emulator_prior/EXAMPLE_EVALUATE2/`:
 `points.txt`, the two prediction arrays, `precision.npy`, `status.txt`,
-`distances.txt`, and `summary.txt`. The source YAML and revision record
-identify the inputs. Rerunning the same command recomputes the sample and
+`distances.txt`, `likelihood_relevance.txt`, and `summary.txt`. The source
+YAML and revision record identify the inputs. Rerunning the same command recomputes the sample and
 replaces these generated results. Agreement at these points is useful for
 an importance-sampling proposal, but does not establish adequate overlap
 or effective sample size for an actual posterior chain.
+
+The example uses observed DES Y3 data.
+The likelihood-relevance table gives each CAMB fit penalty relative to the
+best of the same prior draws, with every nuisance parameter fixed. This
+can show that large emulator differences occur away from the better fits
+on this slice. It is not a profile-likelihood or marginalized-posterior
+exclusion test, and the prior draws are not posterior samples.
