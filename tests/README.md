@@ -86,3 +86,71 @@ python ./projects/des_y3/EXAMPLE_EMUL2_MINIMIZE1.py --check
 ```bash
 python ./projects/des_y3/EXAMPLE_EMUL2_MINIMIZE2.py --check
 ```
+
+## Matter-emulator prior comparison <a name="matter_emulator_prior"></a>
+
+[compare_emulator_camb.py](compare_emulator_camb.py) compares the candidate
+matter-power emulator with CAMB through this project's existing likelihood.
+It uses `EXAMPLE_EVALUATE2.yaml`, draws 50 cosmologies from its cosmological box priors,
+restricts $`0.2 < \Omega_m < 0.5`$, and fixes $`\sum m_\nu=0.06`$ eV.
+Nuisance parameters stay at the example's declared evaluation point. Both
+calculations use plain `mead2020` and CAMB background distances. The original
+example and its production physics are not modified.
+
+Select candidate code and trained-model checkouts before the run. The new
+nonlinear files must exist under the data checkout's `emulmps/w0wa_mead2020/`.
+Each command runs from activated Cocoa.
+
+**Step :one:**: select the candidate code checkout.
+
+```bash
+export EMULATOR_CODE_DIR=/path/to/emulators_code
+```
+
+**Step :two:**: select the candidate model-data checkout.
+
+```bash
+export EMULATOR_DATA_DIR=/path/to/emulators_data_lcdm
+```
+
+**Step :three:**: choose the OpenMP thread count. The driver keeps BLAS
+at one thread and sets TensorFlow before importing the numerical libraries.
+
+```bash
+export OMP_NUM_THREADS=4
+```
+
+**Step :four:**: run the comparison.
+
+```bash
+python projects/des_y3/tests/compare_emulator_camb.py
+```
+
+The shared routine is in `cosmolike_core/cocoa_testing.py`, following the
+other project tests. Model number $`i`$ uses seed $`137+i`$; `--seed` and
+`--models` select another reproducible sample. BLAS remains at one thread.
+The test uses the original CAMB likelihood route and the existing EMUL2
+route. The selected example disables HOD galaxy spectra and halo-model IA;
+its active power-spectrum calculations use total matter. EMUL2 also prepares
+an approximate cold-matter table, but these selected observables do not
+consume it. This comparison therefore does not validate halo observables,
+a cold-matter emulator or a separate distance emulator. The existing
+routes can also have different last tabulated wavenumbers and extrapolation
+ranges. Their prediction difference measures integration into the project,
+including those numerical choices; it does not isolate neural-network error.
+
+The comparison statistic is the squared difference between predictions
+weighted by the project's masked precision matrix,
+$`\delta m^T C^{-1}\delta m`$. It is not the difference of their fit statistics
+against the observations. The requested criterion is strictly below 1. The process exits
+with status 1 if any point fails that criterion or cannot be evaluated.
+Failed points are retained, never replaced by easier draws; broad-prior
+points can lie outside the networks' coordinate ranges.
+
+Results are written to `chains/matter_emulator_prior/EXAMPLE_EVALUATE2/`:
+`points.txt`, the two prediction arrays, `precision.npy`, `status.txt`,
+`distances.txt`, and `summary.txt`. The source YAML and revision record
+identify the inputs. Rerunning the same command recomputes the sample and
+replaces these generated results. Agreement at these points is useful for
+an importance-sampling proposal, but does not establish adequate overlap
+or effective sample size for an actual posterior chain.
