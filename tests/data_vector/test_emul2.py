@@ -66,9 +66,17 @@ class TestHybridEmulator(unittest.TestCase):
         environment["MKL_NUM_THREADS"] = "1"
         environment["VECLIB_MAXIMUM_THREADS"] = "1"
         print("E5 hybrid emulator comparison and Fisher figure:", output, flush=True)
+        frozen = project / "tests/frozen/emulator_precision"
+        prior = frozen / "prior_50.txt"
+        focused = frozen / "focused_25.txt"
+        # A missing row changes the denominator even when CAMB itself succeeds.
+        for path, count in ((prior, 50), (focused, 25)):
+            rows = [s for s in path.read_text().splitlines() if s.strip() and not s.startswith("#")]
+            self.assertEqual(len(rows), count, str(path))
         result = subprocess.run(
             [sys.executable, str(project / "tests/compare_emulator_camb.py"),
-             "--models", "50", "--advisory", "--output", str(output)],
+             "--points", str(prior), "--local-points", str(focused),
+             "--advisory", "--output", str(output)],
             cwd=root,
             env=environment,
             check=False,

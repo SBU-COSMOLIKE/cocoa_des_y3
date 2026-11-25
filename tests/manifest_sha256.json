@@ -45,6 +45,7 @@
     "frozen/data/tatt_des_y3.dataset": "440ec8fbdc9eaaf125d9639bca2d679a5876f733475327d8f2ca4d6c8f38c69b",
     "frozen/data/tatt_des_y3.modelvector": "131de9f9eb57f4452b0249b68db8d88c7a0de15f0402b261e1da1e72e83c3410",
     "frozen/data/tatt_des_y3_ones.dataset": "866943e127b1613eb079f6e28e3cdd00d0c3c7cdd6a0f60eb9862d9c2aaa7cd6",
+    "frozen/emulator_precision/prior_50.txt": "7708db1fb17674b51bb767451aab5957cb064788faf3e9363c24460af846ec0b",
     "frozen/frozen_config_example1.py": "0500923b7363abadff20ab149a74b5ccfcb8b162ce8629cf0b2bc6b4206189c6",
     "frozen/frozen_config_example2.py": "122a9dbf7a531ce76794a1391eb9cc92fd9853ae9288d28d6d4fdd0fbe51aa8f",
     "frozen/frozen_config_example2_2x2pt.py": "e3e8838a7c31cd2dffdb8da7f1b02f6783810e7877aee62db55f2a0bbf6b3933",
