@@ -5,7 +5,7 @@ The study compares fifty prior cosmologies and twenty-five focused Fisher
 points with CAMB, using EXAMPLE_EVALUATE1 and fixed neutrino
 mass and matched nonlinear prescriptions as documented by the comparison
 CLI. Every invocation retains its vectors, diagnostics and figure under
-chains/hybrid_emulator_tests/. It uses current example priors and does not
+chains/hybrid_emulator_tests/. It uses saved benchmark priors and does not
 change frozen regression data. Missing emulator installations
 skip this test; installed numerical-pipeline failures fail it. Accuracy
 exceedances in the broad prior sample remain advisory.
@@ -19,7 +19,7 @@ import unittest
 class TestHybridEmulator(unittest.TestCase):
     """E5: current hybrid matter emulator, with an optional saved Fisher overlay.
 
-    This uses current example priors, not frozen E1--E4 reference vectors.
+    This uses saved benchmark priors, not frozen E1--E4 reference vectors.
     It runs when the candidate code and networks are installed. Broad-prior
     accuracy exceedances and individual nonfinite candidate predictions are
     advisory. Missing CAMB predictions or a comparison with no valid vectors
