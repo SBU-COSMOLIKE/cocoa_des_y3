@@ -171,8 +171,10 @@ exclusion test, and the prior draws are not posterior samples.
 The test draws cosmologies with $w_0>-2$, $1<10^9 A_s\leq 3.5$, $H_0<85$ km/s/Mpc and $0.2<\Omega_m<0.5$, with $m_\nu=0.06$ eV.
 The numbered example supplies any tighter priors.
 The figure will appear here when the comparisons are available.
+The official test reads the model settings from [the fixed parameter tables](frozen/emulator_precision/). It evaluates CAMB and the emulator on the same ordered rows each time.
+The initial Fisher selected the focused coordinates; recomputing the contours leaves those coordinates fixed.
 
-After a later run passes the Fisher convergence check and completes the focused sample,
+After a later run completes the focused sample,
 copy its `fisher/emulator_fisher.png` to `tests/figures/emulator_precision.png` to refresh the published figure.
 <!-- end hybrid-emulator figure -->
 
