@@ -114,6 +114,14 @@ if __name__ == "__main__":
         sys.exit(0)
     output_dir = args.output.resolve() if args.output is not None else None
     local_points = args.local_points.resolve() if args.local_points is not None else None
+    # Replay the official EV1 cosmologies. A custom prior sweep or explicit
+    # parameter table keeps the research CLI's original selection rules.
+    if (args.configuration == "EXAMPLE_EVALUATE1.yaml" and args.models == 50
+            and args.seed == 137 and points_file is None):
+        frozen = project / "tests/frozen/emulator_precision"
+        points_file = frozen / "prior_50.txt"
+        if local_points is None:
+            local_points = frozen / "focused_25.txt"
     os.chdir(root)
     failed = run_matter_emulator_prior_check(
         project=project,
