@@ -165,7 +165,7 @@ can show that large emulator differences occur away from the better fits
 on this slice. It is not a profile-likelihood or marginalized-posterior
 exclusion test, and the prior draws are not posterior samples.
 
-### Official hybrid-emulator accuracy test
+### Hybrid-emulator accuracy test
 
 <!-- hybrid-emulator figure -->
 The CAMB reference uses the saved benchmark's standard numerical controls and one

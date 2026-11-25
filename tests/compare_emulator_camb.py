@@ -120,8 +120,7 @@ def main(*, fisher=False):
         sys.exit(0)
     output_dir = args.output.resolve() if args.output is not None else None
     local_points = args.local_points.resolve() if args.local_points is not None else None
-    # Replay the official EV1 cosmologies. A custom prior sweep or explicit
-    # parameter table keeps the research CLI's original selection rules.
+    # Use the saved cosmologies for the standard benchmark run.
     official = (standard_configuration and args.models == 50
                 and args.seed == 137 and points_file is None)
     fisher_reference = args.fisher_reference
