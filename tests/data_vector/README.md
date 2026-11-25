@@ -521,9 +521,6 @@ on this slice. It is not a profile-likelihood or marginalized-posterior
 exclusion test, and the prior draws are not posterior samples.
 
 <!-- hybrid-emulator figure -->
-The figures below show the earlier benchmark. Runs with $w_0+w_a<-0.4$
-are pending.
-
 **Emulator training range**
 
 | Parameter | Range |
@@ -532,7 +529,12 @@ are pending.
 | Primordial amplitude | $1<10^9 A_s\le 3.5$ |
 | Hubble constant | $H_0<85$ km/s/Mpc |
 | Present dark-energy equation of state in CPL | $w_0>-2$ |
+| Early-time dark-energy equation of state | $w_0+w_a<-0.4$ |
 | Physical baryon density | $\Omega_b(H_0/100)^2<0.035$ |
+
+The revised tables retain cosmologies that already satisfy the cap and
+replace the excluded rows deterministically. The focused replacements
+use the saved Fisher matrix integrated over the capped priors.
 
 The fixed tables intersect this range with the benchmark priors. CAMB uses
 one massive species with $\sum m_\nu=0.06$ eV. Both model routes evaluate
@@ -548,7 +550,7 @@ Counts use the thresholds 0.2, 0.5, 1 and 4 in that order.
 
 | Case | Broad below threshold (50) | Focused below threshold (25) | Nonfinite broad/focused |
 | --- | --- | --- | --- |
-| DES Y3 | 39/41/42/44 | 22/22/24/24 | 0/0 |
+| DES Y3 | 42/44/45/46 | 24/24/25/25 | 0/0 |
 
 <!-- end hybrid-emulator figure -->
 
@@ -569,7 +571,7 @@ Counts use the thresholds 0.2, 0.5, 1 and 4 in that order.
 
 | Probe | Broad below threshold (50) | Focused below threshold (25) | Nonfinite broad/focused |
 | --- | --- | --- | --- |
-| 3×2pt | 32/35/38/42 | 22/22/22/23 | 0/0 |
+| 3×2pt | 34/37/41/45 | 25/25/25/25 | 0/0 |
 
 Add `--probe 3x2pt` to the standalone comparison command below.
 
