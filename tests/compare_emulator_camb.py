@@ -125,12 +125,12 @@ def main(*, fisher=False):
     output_dir = args.output.resolve() if args.output is not None else None
     local_points = args.local_points.resolve() if args.local_points is not None else None
     # Use the saved cosmologies for the standard benchmark run.
-    official = (standard_configuration and args.models == 50
+    fixed_benchmark = (standard_configuration and args.models == 50
                 and args.seed == 137 and points_file is None)
     fisher_reference = args.fisher_reference
     if fisher_reference is not None:
         fisher_reference = fisher_reference.resolve()
-    if official and (not fisher or args.save_fisher_contours):
+    if fixed_benchmark and (not fisher or args.save_fisher_contours):
         points_file = benchmark / "prior_50.txt"
         if local_points is None:
             local_points = benchmark / "focused_25.txt"
@@ -159,7 +159,7 @@ def main(*, fisher=False):
         validate_fisher_steps=args.validate_fisher_steps,
         save_fisher_contours=args.save_fisher_contours,
         fisher_reference=None if args.no_fisher else fisher_reference,
-        focused_models=25 if official or local_points is not None else 0,
+        focused_models=25 if fixed_benchmark or local_points is not None else 0,
         output_dir=output_dir,
         fisher_sample_power=args.fisher_sample_power,
         points_file=points_file,

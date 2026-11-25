@@ -551,6 +551,28 @@ Counts use the thresholds 0.2, 0.5, 1 and 4 in that order.
 
 <!-- end hybrid-emulator figure -->
 
+### Full 3×2pt
+
+The [3×2pt benchmark](../fisher_reference/3x2pt/) uses Evaluate 2's full
+optical selection and fixed nuisance values. Its matched Fisher forecast
+uses the same retained data vector and marginalizes over the sampled
+nuisance parameters. The 50 broad cosmologies are the same as in the
+shear comparison. The 25 focused cosmologies come from the 3×2pt Fisher
+distribution.
+
+CAMB uses `AccuracyBoost: 1.0`, `k_per_logint: 10`, and `kmax: 5`.
+
+![DES Y3 - 3×2pt](figures/emulator_precision_3x2pt.png)
+
+Counts use the thresholds 0.2, 0.5, 1 and 4 in that order.
+
+| Probe | Broad below threshold (50) | Focused below threshold (25) | Nonfinite broad/focused |
+| --- | --- | --- | --- |
+| 3×2pt | 32/35/38/42 | 22/22/22/23 | 0/0 |
+
+Add `--probe 3x2pt` to the standalone comparison command below.
+
+
 E5 reads the saved `benchmark.yaml` in [fisher_reference/](../fisher_reference/).
 The benchmark fixes the likelihood, data selection, sampled parameters,
 fiducial and normal numerical controls.
@@ -608,7 +630,7 @@ columns remain unbounded, so the estimate measures sensitivity to the tested
 refinement.
 
 Run from activated Cocoa with two MPI ranks, four OpenMP threads per rank
-and one BLAS thread.
+and one BLAS thread. Add `--probe 3x2pt` for the full selection.
 
 ```bash
 OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
