@@ -629,12 +629,14 @@ omitted columns and correlated numerical errors remain unknown.
 | Cosmic shear | Ordinary | 1.0 / 1 | 1.0 / 10 | 0.029609289 | — |
 | Cosmic shear | Refined | 2.0 / 2 | 2.0 / 50 | 0.029596738 | -0.0423899% |
 | Cosmic shear | Confirmation | 3.0 / 3 | 3.0 / 75 | 0.029596681 | -0.000192864% |
-
-Results are pending for 3×2pt.
+| 3×2pt | Ordinary | 1.0 / 0 | 1.0 / 10 | 1.3667678 | — |
+| 3×2pt | Refined | 2.0 / 1 | 2.0 / 50 | 1.364886 | -0.137681% |
+| 3×2pt | Confirmation | 3.0 / 2 | 3.0 / 75 | 1.3649148 | +0.00211333% |
 
 **Selected columns in both higher settings**
 
 - Cosmic shear — `w0pwa`, `H0`, `w`, `DES_DZ_S1`, `omegam`.
+- 3×2pt — `DES_DZ_S1`, `omegam`, `DES_DZ_S4`, `w`, `w0pwa`.
 
 Run from activated Cocoa with two MPI ranks, four OpenMP threads per rank
 and one BLAS thread.
