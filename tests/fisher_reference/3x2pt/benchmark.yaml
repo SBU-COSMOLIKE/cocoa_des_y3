@@ -577,7 +577,7 @@ params:
   w0pwa:
     prior:
       min: -3
-      max: -0.01
+      max: -0.40000000000000013  # Exclusive w0 + wa < -0.4.
     ref:
       dist: norm
       loc: -0.99

@@ -521,6 +521,9 @@ on this slice. It is not a profile-likelihood or marginalized-posterior
 exclusion test, and the prior draws are not posterior samples.
 
 <!-- hybrid-emulator figure -->
+The figures below show the earlier benchmark. Runs with $w_0+w_a<-0.4$
+are pending.
+
 **Emulator training range**
 
 | Parameter | Range |
