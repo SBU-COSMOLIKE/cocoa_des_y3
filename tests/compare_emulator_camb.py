@@ -56,6 +56,8 @@ def main(*, fisher=False):
     description = "Screen the CAMB Fisher FoM with one fixed stencil spacing." if fisher else __doc__
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument("--configuration", default=None)
+    parser.add_argument("--probe", choices=("shear", "3x2pt"), default="shear",
+                        help="Probe selection for the saved benchmark")
     parser.add_argument("--models", type=int, default=50)
     parser.add_argument("--seed", type=int, default=137)
     parser.add_argument("--limit", type=float, default=1.0)
@@ -88,6 +90,8 @@ def main(*, fisher=False):
                         help="Distribute points and Fisher columns across MPI ranks")
     args = parser.parse_args()
     benchmark = project / "tests/fisher_reference"
+    if args.probe == "3x2pt":
+        benchmark /= "3x2pt"
     benchmark_yaml = benchmark / "benchmark.yaml"
     if args.configuration is None:
         args.configuration = str(benchmark_yaml)
@@ -135,8 +139,15 @@ def main(*, fisher=False):
                 parser.error(f"Required benchmark table is missing: {required_table}")
     if standard_configuration and fisher_reference is None:
         fisher_reference = benchmark
+    amplitude_bias_cuts = {}
+    if standard_configuration and args.probe == "3x2pt":
+        scales = (1.72716, 1.65168, 1.61423, 1.92886, 2.11633)
+        for index, scale in enumerate(scales, start=1):
+            bias = f"DES_B1_{index}"
+            amplitude_bias_cuts[f"amplitude_cut_{bias}"] = ("As_1e9", bias, 2.1, scale, 8.0)
     os.chdir(root)
     failed = run_matter_emulator_prior_check(
+        amplitude_bias_cuts=amplitude_bias_cuts,
         project=project,
         mpi_comm=mpi_comm,
         configuration=args.configuration,
