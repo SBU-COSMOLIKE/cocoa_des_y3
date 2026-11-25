@@ -1,0 +1,8 @@
+stage=default_accuracy
+likelihood={'path': './external_modules/data/des_y3', 'data_file': 'des_y3_real.dataset', 'accuracyboost': 1.0, 'integration_accuracy': 1, 'lmax': 50000, 'kmax_boltzmann': 5.0, 'non_linear_emul': 2, 'IA_model': 1, 'IA_code': 0, 'IA_redshift_evolution': 3, 'use_baryon_pca': False, 'debug': False, 'create_baryon_pca': False, 'baryon_pca_select_sims': 'antilles-2-99/antilles-101-378/antilles-380-400', 'filename_baryon_pca': './projects/des_y3/chains/pca.txt', 'external_baryon_suppression': False, 'use_emulator': 0, 'nonlimber_tolerance_gg': 0.0, 'nonlimber_tolerance_gs': 0.0}
+CAMB={'halofit_version': 'takahashi', 'AccuracyBoost': 1.0, 'num_massive_neutrinos': 1, 'nnu': 3.046, 'dark_energy_model': 'ppf', 'accurate_massive_neutrino_transfers': False, 'k_per_logint': 10, 'kmax': 5}
+FoM relative tolerance=0.01
+Fisher uses the example's physical theory with mnu=0.06 eV.
+CAMB Fisher reference: logL=-130.38407557872372; -2logL=260.76815115744745
+This is the declared Fisher fiducial and theory; consult numerical_settings.txt for the runner's choices.
+It need not have zero residual against a synthetic vector made with another prescription.

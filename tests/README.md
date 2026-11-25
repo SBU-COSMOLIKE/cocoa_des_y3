@@ -153,7 +153,7 @@ Results are written to `chains/matter_emulator_prior/EXAMPLE_EVALUATE1/with_fish
 `points.txt`, the two prediction arrays, `precision.npy`, `status.txt`,
 `distances.txt`, `likelihood_relevance.txt`, and `summary.txt`. The source
 YAML and revision record identify the inputs. The prediction-only
-`--no-fisher` mode omits the `with_fisher/` subfolder. Rerunning the same command recomputes the sample and
+With the same inputs, the command resumes its existing point checkpoints and
 replaces these generated results. Agreement at these points is useful for
 an importance-sampling proposal, but does not establish adequate overlap
 or effective sample size for an actual posterior chain.
@@ -165,7 +165,7 @@ can show that large emulator differences occur away from the better fits
 on this slice. It is not a profile-likelihood or marginalized-posterior
 exclusion test, and the prior draws are not posterior samples.
 
-### Official hybrid-emulator test and Fisher figure
+### Official hybrid-emulator accuracy test
 
 <!-- hybrid-emulator figure -->
 The test uses the numbered example's priors and fixes $m_\nu=0.06$ eV. It draws cosmologies with $w_0>-2$, $1<10^9 A_s\leq 3.5$, $H_0<85$ km/s/Mpc, $0.2<\Omega_m<0.5$, and $\Omega_b(H_0/100)^2<0.035$.
@@ -179,88 +179,63 @@ The official test evaluates CAMB and the emulator on the same [fixed parameter t
 Copy a completed run's `fisher/emulator_fisher.png` to `tests/figures/emulator_precision.png` to refresh this figure.
 <!-- end hybrid-emulator figure -->
 
-The command-line driver can distribute independent cosmologies and Fisher
-columns over MPI, following the LSST Y1 × DESI Fisher calculation. For one
-project with two ranks and four OpenMP threads per rank, run:
+E5 reads the saved `benchmark.yaml` in [fisher_reference/](fisher_reference/).
+The benchmark fixes the likelihood, data selection, sampled parameters,
+fiducial and normal numerical controls. The figures above record earlier
+runs with the CAMB mean controls used at that time.
+
+The accuracy test evaluates CAMB and the candidate at the fixed
+[50 broad and 25 focused points](fisher_reference/) and stores both
+vectors, the covariance-weighted error, and point status. Nuisance inputs are
+held at the evaluate fiducial. Missing CAMB predictions or a comparison
+with no valid vectors fails E5. The E5 adapter treats large prediction errors
+as advisory. The strict standalone command also checks the error threshold.
 
 ```bash
-mpirun -n 2 --bind-to none python -m mpi4py \
+python -m pytest projects/des_y3/tests/data_vector/test_emul2.py -k e5
+```
+
+To distribute the numerical comparisons across two MPI ranks with four
+OpenMP threads each, use the same driver directly from activated Cocoa.
+Keep BLAS at one thread and pass `--mpi` so the ranks own different points.
+
+```bash
+OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+  VECLIB_MAXIMUM_THREADS=1 mpirun -n 2 --bind-to none python -m mpi4py \
   projects/des_y3/tests/compare_emulator_camb.py --mpi --advisory
 ```
 
-Run one project at a time with this allocation. Each rank owns a separate
-model and evaluates different points or derivative columns. OpenMP works
-inside each evaluation; BLAS stays at one thread. Rank zero assembles and
-writes the combined results. The `--mpi` flag is required: simply launching
-the serial driver twice would repeat work and write to the same files.
-`python -m mpi4py` also stops the other ranks if an uncaught error terminates
-one rank. Plot-only runs use rank zero and need no MPI launch.
-
-
-The E5 test includes the approved accuracy figure whenever the hybrid
-emulator code and networks are installed. No separate plotting flag is
-needed. `EMULATOR_CODE_DIR` and `EMULATOR_DATA_DIR` can select candidate
-checkouts. This is a long numerical test: it evaluates 50 prior cosmologies
-through CAMB and the emulator, computes Fisher derivatives at two step
-sizes, then evaluates 25 focused points selected from that bounded Fisher
-distribution. It keeps BLAS at one thread.
+Saved Fisher contours show the bounded 68% and 95% regions of a centered
+CAMB forecast with nuisance parameters marginalized. The saved reference
+records the matrix, priors, fiducial, selection and numerical diagnostics.
+The accuracy run uses the available saved contour for display. Prediction
+errors remain valid when the saved contour is absent or marked unreliable. `--fisher-reference` selects a saved directory, and
+`--no-fisher` omits the display. Candidate networks can be changed using
+`EMULATOR_CODE_DIR` and `EMULATOR_DATA_DIR`.
 
 ```bash
-python -m pytest projects/des_y3/tests/data_vector/test_emul2.py -k test_e5_hybrid_emulator_fisher
+python projects/des_y3/tests/compare_emulator_camb.py --plot-only /path/to/run
 ```
 
-Each invocation saves vectors, parameters, provenance, diagnostics and the
-PNG/PDF figure in a new directory below `chains/hybrid_emulator_tests/`.
-The colors show the direct prediction error
-`E = (emulator - CAMB).T @ precision @ (emulator - CAMB)` at thresholds
-0.2, 0.5, 1 and 4. Each error interval has its own marker shape; open
-markers are prior draws and filled markers are focused points. Failed
-calculations use an x marker. The title identifies the project;
-the amplitude axis stops at 3.5, or at a tighter project bound. This cap does not establish accuracy throughout the box.
-
-The Fisher calculation uses `EXAMPLE_EVALUATE1.yaml` by default: its
-fiducial, probe, sampled cosmological and nuisance parameters, and full
-retained data vector. The focused selection follows this project's bounded
-Fisher distribution and varies the differentiated nuisance parameters too.
-It does not use emulator errors to select easier points. A supplied
-`--local-points` named-column table replaces the automatic selection; E5
-requires no such file. Both samples appear in the same accuracy figure.
-
-When a weak Fisher direction spans many prior widths, the shared sampler
-adapts its Gaussian proposal to the finite bounds. Exact importance weights
-remove that extra proposal curvature before calculating marginalized moments.
-Independent scrambles check the resulting widths, means and probability mass.
-
-The Fisher calculation includes Gaussian prior curvature and applies hard
-bounds before marginalizing the plotted pairs. Solid/dashed contours enclose
-68/95 percent of this centered local approximation; they are not measured
-posterior contours. Insufficient bounded-sample convergence fails the test.
-For ordinary NLA, the globally unused A2 amplitude, A2 redshift slope and
-BTA parameters have independent priors that integrate out exactly. They
-remain in the Cobaya input point but do not need Fisher derivatives.
-Other columns with zero response only at the fiducial remain bounded
-directions, without artificial information from rounding identical predictions.
-
-Large prediction errors and individual nonfinite emulator predictions are
-reported as advisory results. Missing CAMB references, no valid comparisons,
-or an incomplete Fisher/plot calculation fail the test. Frozen regression
-references and production theory choices are not changed.
-
-To redraw a completed run, set `EMULATOR_COMPARISON_DIR` to its directory:
+### Separate FoM screen
 
 ```bash
-python projects/des_y3/tests/compare_emulator_camb.py --plot-only "$EMULATOR_COMPARISON_DIR"
+OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+  VECLIB_MAXIMUM_THREADS=1 mpirun -n 2 --bind-to none python -m mpi4py \
+  projects/des_y3/tests/check_fom_convergence.py --mpi
 ```
 
-Add `--resample-fisher --fisher-sample-power 20` to repeat only the bounded
-integration with more samples. `--no-fisher` is available in the standalone
-driver for a prediction-only diagnostic; E5 does not use it. The driver
-supports `--models`, `--seed`, `--points` and `--output` for explicit studies.
-Its `--advisory` flag is used by E5; without it, accuracy exceedances also
-produce a nonzero exit code.
+The FoM screen builds the full CAMB baseline once. Each nonzero coordinate
+uses `h = 0.025 * abs(fiducial)`, capped when needed to keep both
+`±2h` stencil points within the prior. Zero-centered coordinates use
+their configured absolute step, or one tenth of their proposal width.
+The archive records every actual step. Fourth differences at that one
+spacing rank the numerical noise contributions. Only the selected
+columns run at higher accuracy; the output records the omitted columns
+and the estimated FoM shift. This command is independent of E5.
 
-The native accuracy-control regression also checks the historical signed
-integration controls in fresh processes. It accepts levels -1, 10 and 62,
-and rejects values outside the core's supported range. Level 10 in the
-high-accuracy advisory suite is intentional; this guard check does not
-establish convergence of a Fisher matrix or a survey covariance.
+Use `--save-fisher-contours` to explicitly integrate and store a bounded
+contour for later accuracy plots. The calculation writes the reference to
+`reference/` under its output directory. `--validate-fisher-steps` opts
+into the more expensive full comparison at two stencil spacings and multiple
+accuracy settings.
