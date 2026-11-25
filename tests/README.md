@@ -167,6 +167,15 @@ exclusion test, and the prior draws are not posterior samples.
 
 ### Official hybrid-emulator test and Fisher figure
 
+<!-- hybrid-emulator figure -->
+The test draws cosmologies with $w_0>-2$, $1<10^9 A_s\leq 3.5$, $H_0<85$ km/s/Mpc and $0.2<\Omega_m<0.5$, with $m_\nu=0.06$ eV.
+The numbered example supplies any tighter priors.
+The figure will appear here when the comparisons are available.
+
+After a later run passes the Fisher convergence check and completes the focused sample,
+copy its `fisher/emulator_fisher.png` to `tests/figures/emulator_precision.png` to refresh the published figure.
+<!-- end hybrid-emulator figure -->
+
 The command-line driver can distribute independent cosmologies and Fisher
 columns over MPI, following the LSST Y1 × DESI Fisher calculation. For one
 project with two ranks and four OpenMP threads per rank, run:
