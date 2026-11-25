@@ -23,10 +23,13 @@ likelihood:
     baryon_pca_select_sims: "antilles-2-99/antilles-101-378/antilles-380-400"
     filename_baryon_pca: "./projects/des_y3/chains/pca.txt"
     external_baryon_suppression: False
+prior:
+  emulator_omegabh2_cap: "lambda omegab, H0: 0.0 if omegab*(H0/100)**2 < 0.035 else -np.inf"
+
 params:
   As_1e9:
     prior:
-      min: 0.5
+      min: 1.0000000000000002
       max: 3.5
     ref:
       dist: norm
@@ -49,7 +52,7 @@ params:
   H0:
     prior:
       min: 55
-      max: 91
+      max: 84.99999999999999
     ref:
       dist: norm
       loc: 67.32
@@ -69,8 +72,8 @@ params:
     drop: true
   omegam:
     prior:
-      min: 0.2
-      max: 0.5
+      min: 0.20000000000000004
+      max: 0.49999999999999994
     ref:
       dist: norm
       loc: 0.316
@@ -79,14 +82,7 @@ params:
     latex: \Omega_\mathrm{m}
     drop: true
   mnu:
-    prior:
-      min: 0.06
-      max: 0.6
-    ref:
-      dist: norm
-      loc: 0.25
-      scale: 0.1
-    proposal: 0.05
+    value: 0.06
   w0pwa:
     prior:
       min: -3 # w0 + wa > -3: below it the early phantom regime needs a costlier CAMB
@@ -100,7 +96,7 @@ params:
     drop: true
   w:
     prior:
-      min: -3
+      min: -1.9999999999999998
       max: -0.01
     ref:
       dist: norm
@@ -636,7 +632,6 @@ sampler:
       H0: 67.32
       omegab: 0.04
       omegam: 0.3
-      mnu: 0.06
       w0pwa: -0.9
       w: -0.9
       DES_DZ_S1: 0.0414632

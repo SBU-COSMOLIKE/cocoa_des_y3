@@ -16,10 +16,13 @@ likelihood:
     IA_redshift_evolution: 3
     use_baryon_pca: False
 
+prior:
+  emulator_omegabh2_cap: "lambda omegab, H0: 0.0 if omegab*(H0/100)**2 < 0.035 else -np.inf"
+
 params:
   As_1e9:
     prior:
-      min: 0.5
+      min: 1.0000000000000002
       max: 3.5
     ref:
       dist: norm
@@ -42,7 +45,7 @@ params:
   H0:
     prior:
       min: 55
-      max: 91
+      max: 84.99999999999999
     ref:
       dist: norm
       loc: 67.32
@@ -62,8 +65,8 @@ params:
     drop: true
   omegam:
     prior:
-      min: 0.2
-      max: 0.5
+      min: 0.20000000000000004
+      max: 0.49999999999999994
     ref:
       dist: norm
       loc: 0.316
@@ -84,7 +87,7 @@ params:
     drop: true
   w:
     prior:
-      min: -3
+      min: -1.9999999999999998
       max: -0.01
     ref:
       dist: norm
