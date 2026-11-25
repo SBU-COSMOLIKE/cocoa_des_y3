@@ -167,6 +167,24 @@ exclusion test, and the prior draws are not posterior samples.
 
 ### Official hybrid-emulator test and Fisher figure
 
+The command-line driver can distribute independent cosmologies and Fisher
+columns over MPI, following the LSST Y1 × DESI Fisher calculation. For one
+project with two ranks and four OpenMP threads per rank, run:
+
+```bash
+mpirun -n 2 --bind-to none python -m mpi4py \
+  projects/des_y3/tests/compare_emulator_camb.py --mpi --advisory
+```
+
+Run one project at a time with this allocation. Each rank owns a separate
+model and evaluates different points or derivative columns. OpenMP works
+inside each evaluation; BLAS stays at one thread. Rank zero assembles and
+writes the combined results. The `--mpi` flag is required: simply launching
+the serial driver twice would repeat work and write to the same files.
+`python -m mpi4py` also stops the other ranks if an uncaught error terminates
+one rank. Plot-only runs use rank zero and need no MPI launch.
+
+
 The E5 test includes the approved accuracy figure whenever the hybrid
 emulator code and networks are installed. No separate plotting flag is
 needed. `EMULATOR_CODE_DIR` and `EMULATOR_DATA_DIR` can select candidate
@@ -223,3 +241,9 @@ driver for a prediction-only diagnostic; E5 does not use it. The driver
 supports `--models`, `--seed`, `--points` and `--output` for explicit studies.
 Its `--advisory` flag is used by E5; without it, accuracy exceedances also
 produce a nonzero exit code.
+
+The native accuracy-control regression also checks the historical signed
+integration controls in fresh processes. It accepts levels -1, 10 and 62,
+and rejects values outside the core's supported range. Level 10 in the
+high-accuracy advisory suite is intentional; this guard check does not
+establish convergence of a Fisher matrix or a survey covariance.
