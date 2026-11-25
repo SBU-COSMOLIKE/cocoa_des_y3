@@ -168,19 +168,15 @@ exclusion test, and the prior draws are not posterior samples.
 ### Official hybrid-emulator test and Fisher figure
 
 <!-- hybrid-emulator figure -->
-The test draws cosmologies with $w_0>-2$, $1<10^9 A_s\leq 3.5$, $H_0<85$ km/s/Mpc and $0.2<\Omega_m<0.5$, with $m_\nu=0.06$ eV.
-The numbered example supplies any tighter priors.
-The open symbols show 50 broad draws.
-The filled symbols show 25 draws near the example fiducial.
+The test uses the numbered example's priors and fixes $m_\nu=0.06$ eV. It draws cosmologies with $w_0>-2$, $1<10^9 A_s\leq 3.5$, $H_0<85$ km/s/Mpc, $0.2<\Omega_m<0.5$, and $\Omega_b(H_0/100)^2<0.035$.
+The open symbols show 50 broad draws. The filled symbols show 25 focused draws from the Fisher distribution under the same cuts.
 The solid and dashed curves enclose the 68% and 95% regions of the nuisance-marginalized Fisher forecast.
-The largest measured FoM change was 2.98% against the 1% target. These contours identify the region used for the focused emulator comparisons.
-The official test reads the model settings from [the fixed parameter tables](frozen/emulator_precision/). It evaluates CAMB and the emulator on the same ordered rows each time.
-The initial Fisher selected the focused coordinates; recomputing the contours leaves those coordinates fixed.
+The largest measured FoM change was 2.98% against the 1% target. The contours approximate the region used for the focused comparisons.
+The official test evaluates CAMB and the emulator on the same [fixed parameter tables](frozen/emulator_precision/) each time.
 
 ![DES Y3 hybrid-emulator error against CAMB](figures/emulator_precision.png)
 
-After a later run completes the focused sample,
-copy its `fisher/emulator_fisher.png` to `tests/figures/emulator_precision.png` to refresh the published figure.
+Copy a completed run's `fisher/emulator_fisher.png` to `tests/figures/emulator_precision.png` to refresh this figure.
 <!-- end hybrid-emulator figure -->
 
 The command-line driver can distribute independent cosmologies and Fisher
