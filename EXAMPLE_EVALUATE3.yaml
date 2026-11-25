@@ -84,7 +84,8 @@ params:
   w0pwa:
     prior:
       min: -3 # w0 + wa > -3: below it the early phantom regime needs a costlier CAMB
-      max: -0.01
+      # Exclusive w0 + wa < -0.4 in Cobaya's float64 prior.
+      max: -0.40000000000000013
     ref:
       dist: norm
       loc: -0.99
