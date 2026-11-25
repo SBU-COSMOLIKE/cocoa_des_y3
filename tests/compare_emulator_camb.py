@@ -127,14 +127,15 @@ def main(*, fisher=False):
     fisher_reference = args.fisher_reference
     if fisher_reference is not None:
         fisher_reference = fisher_reference.resolve()
-    if standard_configuration:
-        frozen = benchmark
-        if official and (frozen / "prior_50.txt").is_file():
-            points_file = frozen / "prior_50.txt"
-        if official and local_points is None and (frozen / "focused_25.txt").is_file():
-            local_points = frozen / "focused_25.txt"
-        if fisher_reference is None:
-            fisher_reference = benchmark
+    if official and (not fisher or args.save_fisher_contours):
+        points_file = benchmark / "prior_50.txt"
+        if local_points is None:
+            local_points = benchmark / "focused_25.txt"
+        for required_table in (points_file, local_points):
+            if not required_table.is_file():
+                parser.error(f"Required benchmark table is missing: {required_table}")
+    if standard_configuration and fisher_reference is None:
+        fisher_reference = benchmark
     os.chdir(root)
     failed = run_matter_emulator_prior_check(
         project=project,
