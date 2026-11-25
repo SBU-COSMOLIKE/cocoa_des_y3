@@ -91,7 +91,8 @@ python ./projects/des_y3/EXAMPLE_EMUL2_MINIMIZE2.py --check
 
 [compare_emulator_camb.py](compare_emulator_camb.py) compares the candidate
 matter-power emulator with CAMB through this project's existing likelihood.
-It uses `EXAMPLE_EVALUATE1.yaml`, draws 50 cosmologies from its cosmological box priors,
+It reads the fixed [benchmark](fisher_reference/) and its 50 broad and
+25 focused cosmologies,
 restricts $`0.2 < \Omega_m < 0.5`$, and fixes $`\sum m_\nu=0.06`$ eV.
 For the broad-prior sample, nuisance parameters stay at the example's
 declared evaluation point. Both
@@ -129,8 +130,8 @@ python projects/des_y3/tests/compare_emulator_camb.py
 ```
 
 The shared routine is in `cosmolike_core/cocoa_testing.py`, following the
-other project tests. Model number $`i`$ uses seed $`137+i`$; `--seed` and
-`--models` select another reproducible sample. BLAS remains at one thread.
+other project tests. A custom research draw uses seed $`137+i`$ for row
+$`i`$. Use `--seed` and `--models` to request a new draw. BLAS remains at one thread.
 The test uses the original CAMB likelihood route and the existing EMUL2
 route. The selected example disables HOD galaxy spectra and halo-model IA;
 its active power-spectrum calculations use total matter. EMUL2 also prepares
@@ -149,12 +150,11 @@ with status 1 if any point fails that criterion or cannot be evaluated.
 Failed points are retained, never replaced by easier draws; broad-prior
 points can lie outside the networks' coordinate ranges.
 
-Results are written to `chains/matter_emulator_prior/EXAMPLE_EVALUATE1/with_fisher/`:
+The driver writes these files under a new `chains/matter_emulator_points/` run directory.
 `points.txt`, the two prediction arrays, `precision.npy`, `status.txt`,
 `distances.txt`, `likelihood_relevance.txt`, and `summary.txt`. The source
-YAML and revision record identify the inputs. The prediction-only
-With the same inputs, the command resumes its existing point checkpoints and
-replaces these generated results. Agreement at these points is useful for
+YAML, effective reference YAML and provenance identify the inputs.
+An explicit output directory resumes the same comparison checkpoints. Agreement at these points is useful for
 an importance-sampling proposal, but does not establish adequate overlap
 or effective sample size for an actual posterior chain.
 
