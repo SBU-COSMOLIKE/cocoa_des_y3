@@ -18,6 +18,9 @@ nonlimber_tolerance_gs: 0.01
 # non-Limber below it and Limber above; 150 is the cosmolike default
 lmax_nonlimber: 150
 integration_accuracy: 0
+# Multipliers for each probe’s radial integration resolution.
+integration_accuracy_ss: 1.0
+integration_accuracy_gg: 1.0
 # n(z) interpolation: 0 = cubic spline, 1 = linear, 2+ = Steffen (monotone)
 # 0: original midpoint curve (default); 1: histogram + Akima.
 # Akima ignores photoz_interpolation_type; select its fixed first factor below.

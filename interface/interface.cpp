@@ -111,7 +111,17 @@ PYBIND11_MODULE(cosmolike_des_y3_interface, m)
       &cosmolike_interface::init_accuracy_boost,
       "Init accuracy and sampling Boost (may slow down Cosmolike a lot)",
       (py::arg("accuracy_boost") = 1.0).none(false),
-      (py::arg("integration_accuracy") = 0).none(false)
+      (py::arg("integration_accuracy") = 0).none(false),
+      (py::arg("integration_accuracy_ss") = 1.0).none(false),
+      (py::arg("integration_accuracy_gs") = 1.0).none(false),
+      (py::arg("integration_accuracy_gg") = 1.0).none(false),
+      (py::arg("integration_accuracy_gk") = 1.0).none(false),
+      (py::arg("integration_accuracy_ks") = 1.0).none(false),
+      (py::arg("integration_accuracy_kk") = 1.0).none(false),
+      (py::arg("integration_accuracy_cg") = 1.0).none(false),
+      (py::arg("integration_accuracy_cc") = 1.0).none(false),
+      (py::arg("integration_accuracy_cs") = 1.0).none(false),
+      (py::arg("integration_accuracy_n") = 1.0).none(false)
     );
 
   m.def("init_photoz_histogram_akima",

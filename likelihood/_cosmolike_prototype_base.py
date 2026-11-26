@@ -434,15 +434,26 @@ class _cosmolike_prototype_base(DataSetLikelihood):
           source_multihisto_file=self.source_file,
           source_ntomo=int(self.source_ntomo))
       ci.init_data_real(self.cov_file, self.mask_file, self.data_vector_file)  
-      ci.init_accuracy_boost(accuracy_boost=0.35, 
-                             integration_accuracy=-1) # seems enough to compute PM
+      # seems enough to compute PM
+      ci.init_accuracy_boost(
+          accuracy_boost=0.35,
+          integration_accuracy=-1,
+          integration_accuracy_ss=getattr(self, "integration_accuracy_ss", 1.0),
+          integration_accuracy_gs=getattr(self, "integration_accuracy_gs", 1.0),
+          integration_accuracy_gg=getattr(self, "integration_accuracy_gg", 1.0),
+      )
     else:
       # use_emulator = 0 or 2: CosmoLike computes the data vector. lmax is
       # the multipole limit of its C_l tables; is_linear=False keeps the
       # nonlinear matter power.
       ci.init_ntable_lmax(lmax=int(self.lmax))
-      ci.init_accuracy_boost(accuracy_boost=self.accuracyboost, 
-                             integration_accuracy=int(self.integration_accuracy))
+      ci.init_accuracy_boost(
+          accuracy_boost=self.accuracyboost,
+          integration_accuracy=int(self.integration_accuracy),
+          integration_accuracy_ss=getattr(self, "integration_accuracy_ss", 1.0),
+          integration_accuracy_gs=getattr(self, "integration_accuracy_gs", 1.0),
+          integration_accuracy_gg=getattr(self, "integration_accuracy_gg", 1.0),
+      )
       ci.init_cosmo_runmode(is_linear=False)
       # the FKEM non-Limber cap (limits.LMAX_NOLIMBER): C_gg and C_gs
       # are non-Limber below it and Limber above; set at every
